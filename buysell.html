@@ -27,7 +27,9 @@
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Fixed top</a>
                     <div>
-                        <i class="fas fa-comment-dots fs-3 py-1 v-bottom"></i>
+                        <i class="fas fa-comment-dots fs-3 py-1 v-bottom"></i> <span style="font-size: .55em;" class="position-absolute fs-7 mt-2 start-9   0 translate-middle badge rounded-pill bg-danger">
+                            9+
+                          </span>
                         <div class="btn-group">
                             <button class=" btn dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                                Hi Deeksha!
@@ -52,8 +54,13 @@
                         <h5 class="pl-1">
                             Price Range
                         </h5>
-                        <label for="customRange1" class="form-label">Example range</label>
-                        <input type="range" class="form-range" id="customRange1">
+                        <input type="range" class="form-range" id="customRange1" value="5000" min="100" max="100000" oninput='this.nextElementSibling.children[2].value= this.value'>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">0</span>
+                            <span class="input-group-text"> to </span>
+                            
+                            <input type="text"  value="5000" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                          </div>
                     </div>
                     <h5 class="pl-1">
                         Sell Type
@@ -92,11 +99,11 @@
                         </li>
                         <li class="list-group-item">
                             <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
-                            High to low
+                            Price High to low
                         </li>
                         <li class="list-group-item">
                             <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
-                            low to high
+                            Price low to high
                         </li>
                     </ul>
                 </nav>
