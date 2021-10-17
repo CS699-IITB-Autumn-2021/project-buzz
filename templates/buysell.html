@@ -114,14 +114,18 @@
 
 
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-3 px-5">
+                    {%for i in range(0, 5)%}
                     <div class="col">
+                        <!-- For loop logic of jinja template -->
+                        
+                        
                         <div class="card">
-                            <img src="temp.jpeg" class="card-img-top" alt="temp.jpeg">
+                            <img src="{{url_for('static', filename='temp.jpeg')}} " class="card-img-top" />
                             <div class="card-body">
                                 <div class="row">
-
+                                    
                                     <div class="col-12">
-
+                                        
                                         <h5 class="card-title">BABY YODA FOR SALE</h5>
                                         <div>
                                             <div class="card-text">
@@ -129,151 +133,39 @@
                                                 <span class=" fs-5">5000000000</span>
                                                 <br>
                                                 <span class="d-flex justify-content-between" >                
-                                                <span class="fs-6">
-                                                    <i class="fas fa-truck pe-2"></i>Qnt: x5
-                                                </span>
+                                                    <span class="fs-6">
+                                                        <i class="fas fa-truck pe-2"></i>Qnt: x5
+                                                    </span>
                                                     <span class="my-auto" style="font-size: 12px;"><i class="far fa-clock text-muted" ></i><span class="text-posted "> 11/12/2021</span></span>
                                                 </span>
-                                        
-                                                </div>
+                                                
+                                            </div>
                                         </div>
-
-
+                                        
+                                        
                                     </div>
                                 </div>
-
+                                
                             </div>
-
-
+                            
+                            
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-6   text-center">
                                         <i class="fa fa-thumbs-up hvr-icon px-2"></i>50</div>
-                                    <div class="col-6 text-center">
-                                        <i class="far fa-thumbs-down px-2"></i>0</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="temp.jpeg" class="card-img-top" alt="temp.jpeg">
-                            <div class="card-body">
-                                <div class="row">
-
-                                    <div class="col-12">
-
-                                        <h5 class="card-title">BABY YODA FOR SALE</h5>
-                                        <div>
-                                            <div class="card-text">
-                                                <i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                <span class=" fs-5">5000000000</span>
-                                                <br>
-                                                <span class="fs-6">
-                                                    <i class="fas fa-truck pe-2"></i>Qnt: x5
-                                                </span>
-                                            </div>
+                                        <div class="col-6 text-center">
+                                            <i class="far fa-thumbs-down px-2"></i>0</div>
                                         </div>
-
-
                                     </div>
                                 </div>
-
                             </div>
-
-
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-6 tex   text-center">
-                                        <i class="far fa-thumbs-up px-2"></i>LIKE</div>
-                                    <div class="col-6 text-center">
-                                        <i class="far fa-thumbs-down px-2"></i>DISLIKE</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="temp.jpeg" class="card-img-top" alt="temp.jpeg">
-                            <div class="card-body">
-                                <div class="row">
-
-                                    <div class="col-12">
-
-                                        <h5 class="card-title">BABY YODA FOR SALE</h5>
-                                        <div>
-                                            <div class="card-text">
-                                                <i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                <span class=" fs-5">5000000000</span>
-                                                <br>
-                                                <span class="fs-6">
-                                                    <i class="fas fa-truck pe-2"></i>Qnt: x5
-                                                </span>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-6 tex   text-center">
-                                        <i class="far fa-thumbs-up px-2"></i>LIKE</div>
-                                    <div class="col-6 text-center">
-                                        <i class="far fa-thumbs-down px-2"></i>DISLIKE</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="temp.jpeg" class="card-img-top" alt="temp.jpeg">
-                            <div class="card-body">
-                                <div class="row">
-
-                                    <div class="col-12">
-
-                                        <h5 class="card-title">BABY YODA FOR SALE</h5>
-                                        <div>
-                                            <div class="card-text">
-                                                <i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                <span class=" fs-5">5000000000</span>
-                                                <br>
-                                                <span class="fs-6">
-                                                    <i class="fas fa-truck pe-2"></i>Qnt: x5
-                                                </span>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-6 tex   text-center">
-                                        <i class="far fa-thumbs-up px-2"></i>LIKE</div>
-                                    <div class="col-6 text-center">
-                                        <i class="far fa-thumbs-down px-2"></i>DISLIKE</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                            {%endfor%}
                 </div>
 
             </div>
         </div>
 
 
-        <h1>Hello, world!</h1>
 
         <!-- Optional JavaScript; choose one of the two! -->
 

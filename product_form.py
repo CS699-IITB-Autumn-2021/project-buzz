@@ -28,7 +28,6 @@ def insertData(q):
 	return conn.commit()
 
 class NameForm(FlaskForm):
-	choices = ["loda","lasan"]
 	types = fetchEnumTable("selling_opt","selling_option,selling_type")
 	choices = fetchEnumTable("categories","category_id,category_name")
 	category = SelectField('Category',choices=choices, validators=[DataRequired()])
