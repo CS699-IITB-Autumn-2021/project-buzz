@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+Enter Phone Number
+{% endblock %}
+
+{% block content %}
+
+<!--
+<body class="text-center">
+<form action="/getOTP" method="post">
+        <div class="container">
+            <label> Enter Mobile Number </label></br>
+            <input type="text" name="number" class="form-control" placeholder="+91**********" /></br>
+            <button type="submit" class="btn btn-light">Get OTP</button>
+        </div>
+</form>
+</body>
+-->
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-register" style="color:white">
+            {{ form.hidden_tag() }}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Please Enter Your Phone Number
+            </h1>
+            <br>
+            {{ form.contact_no.label() }}
+            {{ form.contact_no(class="form-control", placeholder="+91**********") }}
+            <br>
+
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+        </form>
+    </div>
+</body>
+{% endblock %}
