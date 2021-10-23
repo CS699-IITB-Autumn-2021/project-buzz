@@ -77,10 +77,13 @@ cur.execute("SELECT * FROM tags")
 records = cur.fetchall()
 for rows in records:
     print(rows)
+
+
+# inserting a dummy test user into the database to test for chat functionality while developing
+query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+data = ['test-rollnumber', 'test-fname', 'test-lname', 'test@gmail.com', 919876543210, 12345, True]
+cur.execute(query, data)
 conn.commit()
-
-
-
         
 
         

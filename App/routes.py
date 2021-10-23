@@ -91,7 +91,7 @@ def validateOTP():
             '''
             # inserting the user if he new to the website
             query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], int(phone_number[1:]), finalData['email'], int(finalData['roll_number']), valid]
+            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], int(phone_number[1:]), int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
             '''
@@ -112,5 +112,28 @@ def validateOTP():
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
     finalData = session.get('finalData')
-    username = finalData['first_name'] + finalData['last_name']
-    return render_template('chat.html', username=username)
+    username = finalData['first_name'] + " " + finalData['last_name']
+
+    # static rooms are defined in the below array: need to replace the list to a dynamic one
+    ROOMS = ['lounge', 'news', 'games', 'coding']
+    return render_template('chat.html', username=username, rooms = ROOMS)
+
+
+# dummy login for the test user - remove this once all testing is done
+@app.route("/dummylogin", methods=['GET', 'POST'])
+def dummyLogin():
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber' """)
+    records= cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
