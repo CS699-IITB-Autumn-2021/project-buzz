@@ -6,8 +6,12 @@ from flask_socketio import SocketIO
 from pymongo import MongoClient
 
 
+from flask_bootstrap import Bootstrap
+
+
 # configure app
 app = Flask(__name__)
+Bootstrap(app)
 config = dotenv_values(".env")
 app.secret_key = "super secret key"
 
