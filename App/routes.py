@@ -6,7 +6,6 @@ from App.forms import PhoneNumberForm
 from App import conn, cur
 from App.chatDBOperations import *
 
-
 @app.route('/')
 def ssoVerification():
     # Error handling page redirection

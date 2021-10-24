@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for,request
+
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
@@ -6,15 +7,12 @@ from wtforms import StringField, SubmitField,MultipleFileField
 from wtforms.fields.core import IntegerField, SelectField , RadioField
 from flask_uploads import UploadSet, configure_uploads,IMAGES
 from wtforms.validators import DataRequired , Length, NumberRange
-import os
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-
-
 import os
 import sqlite3
 basedir = os.path.abspath(os.path.dirname(__file__))
+from App import app
 
-app = Flask(__name__)
 Bootstrap(app)
 
 # Flask-WTF requires an encryption key - the string can be anything
@@ -56,8 +54,8 @@ class productForm(FlaskForm):
 	submit = SubmitField('Submit')
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+@app.route('/addProduct', methods=['GET', 'POST'])
+def addProducts():
 	# names = get_names(ACTORS)
 	# you must tell the variable 'form' what you named the class, above
 	# 'form' is the variable name used in this template: index.html
@@ -83,9 +81,5 @@ def index():
 		query = """insert into products(category_id,user_id,product_description,title,product_availability,selling_option) values(%d,1,\'%s\',\'%s\',%d,%d)""" %(int(category) ,description, title, int(quantity),int(type))
 		print(insertData(query))
 		message = title+"  That actor is not name in our database."+category+" "+description+" "+str(quantity)+" "+type+" "+tags
-	return render_template('index.html', form=form, message=message ,tag_list=finalTaglist)
+	return render_template('addProduct.html', form=form, message=message ,tag_list=finalTaglist)
 
-
-# Flask-Bootstrap requires this line
-if __name__ == '__main__':
-	app.run(host="0.0.0.0",port="5000",debug=True)
