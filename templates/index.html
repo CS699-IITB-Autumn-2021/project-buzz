@@ -3,7 +3,13 @@
 
 {% block styles %}
 {{ super() }}
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
 	<style>
+
+    
 		body { background: #e8f1f9; }
 
 /*the container must be positioned relative:*/
@@ -11,7 +17,20 @@
   position: relative;
   display: inline-block;
 }
-
+.sellingType{
+  margin-top: 10px;
+}
+.sellingType .form-check:not(:first-child) 
+{
+  margin-left: 15px;
+}
+#bidPriceContainer .form-group:not(:first-child) 
+{
+  margin-left: 15px;
+}
+#price{
+  width: 20%;
+}
 input {
   border: 1px solid transparent;
   background-color: #f1f1f1;
@@ -59,6 +78,18 @@ input[type=submit] {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
 }
+#fixedPriceContainer {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation-duration: 0.2s; /* don't forget to set a duration! */
+}
+#bidPriceContainer {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation-duration: 0.2s; /* don't forget to set a duration! */
+}
 	</style>
 {% endblock %}
 
@@ -69,17 +100,48 @@ input[type=submit] {
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+     <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
         <span class="d-flex">
-
-            {{wtf.form_field(form.category)}}
+          {{wtf.form_field(form.category)}}
+          {{wtf.form_field(form.title)}}
         </span>
-      {{ wtf.quick_form(form) }}
-      
-        <div class="autocomplete" style="width:300px;">
-          {{wtf.form_field(form.tags,id="tagsList")}}
-        </div>
-      <p class="pt-5"><strong>{{ message }}</strong></p>
-
+        <span class = "">
+          
+          {{wtf.form_field(form.description)}}
+          <span class="d-flex  sellingType flex-column " >
+            <div class="d-flex mb-2" >
+              {{wtf.form_field(form.type,id="sellingTypeId")}}
+            </div>
+            <div id="fixedPriceContainer" class="animate__animated d-none m-0 ">
+              {{wtf.form_field(form.price,id="price",class="form-control")}}
+            </div> 
+            <div id="bidPriceContainer" class="animate__animated d-none  m-0   ">
+              <span class="d-flex">
+                {{wtf.form_field(form.bidPrice,class="form-control")}}
+                {{wtf.form_field(form.bidIncrement,class="form-control")}}
+              </span>
+            </div> 
+            {{form.photo}}
+            
+          </span>
+        </span>   
+        <span class="d-flex">
+          
+          <div class="col-4">
+            
+            {{wtf.form_field(form.quantity)}}
+          </div>
+          
+          <div class="autocomplete" style="width:300px;">
+            {{wtf.form_field(form.tags,id="tagsList")}}
+          </div>
+        </span>
+        {{wtf.form_field(form.submit,class="form-control")}}
+        
+        
+        <p class="pt-5"><strong>{{ message }}</strong></p>
+      </form>
     </div>
   </div>
 </div>
@@ -185,6 +247,33 @@ input[type=submit] {
   /*An array containing all the country names in the world:*/
   var countries  = {{ tag_list | tojson }};
   
+  window.onload = function() {
+
+
+    document.getElementById("type-0").onclick = function(){
+      document.getElementById("fixedPriceContainer").classList.remove("d-none");
+      document.getElementById("fixedPriceContainer").classList.remove("animate__zoomOut");
+      document.getElementById("fixedPriceContainer").classList.add("animate__zoomIn");
+      document.getElementById("bidPriceContainer").classList.add("animate__zoomOut");
+      document.getElementById("bidPriceContainer").classList.add("d-none");}
+    }
+    document.getElementById("type-1").onclick = function(){
+      document.getElementById("bidPriceContainer").classList.remove("d-none");
+      document.getElementById("bidPriceContainer").classList.remove("animate__zoomOut");
+
+      document.getElementById("bidPriceContainer").classList.add("animate__zoomIn");
+      document.getElementById("fixedPriceContainer").classList.add("animate__zoomOut");
+      document.getElementById("fixedPriceContainer").classList.add("d-none");
+  }
+  document.getElementById("type-2").onclick = function(){
+    document.getElementById("fixedPriceContainer").classList.add("animate__zoomOut");
+    document.getElementById("bidPriceContainer").classList.add("animate__zoomOut");
+    document.getElementById("bidPriceContainer").classList.remove("animate__zoomIn");
+    document.getElementById("fixedPriceContainer").classList.remove("animate__zoomIn");
+
+    document.getElementById("bidPriceContainer").classList.add("d-none");
+    document.getElementById("fixedPriceContainer").classList.add("d-none");
+  }
   /*initiate the autocomplete function on the "tagsList" element, and pass along the countries array as possible autocomplete values:*/
   autocomplete(document.getElementById("tagsList"), countries);
   </script>
