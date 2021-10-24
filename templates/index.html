@@ -1,12 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% import "bootstrap/wtf.html" as wtf %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<!-- Bootstrap CSS -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <style>
@@ -47,8 +47,8 @@ a:active {
       </style>
 
     
-  </head>
-  <body>
+
+  {% block content %}
     <div style="
     
     background-color: rgb(161, 201, 218);
@@ -84,7 +84,7 @@ a:active {
     <a href="https://www.google.com/" class="link-dark">
     <div class="card h-100" style="background-color: #74d4b6;" >
       <div class="card-body" >
-        <div><img src="images/essential.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/essential.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">ESSENTIALS</div>
         
@@ -96,7 +96,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#c7ad8e" >
       <div class="card-body " >
-        <div><img src="images/cycle.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/cycle.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">CYCLES</div>
         
@@ -108,7 +108,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#5bc0ea;" >
       <div class="card-body" >
-        <div><img src="images/clothing.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/clothing.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">CLOTHING</div>
         
@@ -125,7 +125,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#f3b138" >
       <div class="card-body" >
-        <div><img src="images/sports.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/sports.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">SPORTS</div>
         
@@ -137,7 +137,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#e97b54;" >
       <div class="card-body" >
-        <div><img src="images/bags.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/bags.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">BAGS</div>
         
@@ -156,7 +156,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#a3cda5;" >
       <div class="card-body" >
-        <div><img src="images/books.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/books.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">BOOKS</div>
         
@@ -170,7 +170,7 @@ a:active {
     <a href="https://www.google.com/">
     <div class="card h-100" style="background-color:#647472;" >
       <div class="card-body" >
-        <div><img src="images/electronic.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
+        <div><img src="static/electronic.png" class="rounded mx-auto d-block" width="150px" height="150px"></div>
       </br>
         <div align="center" class="fs-5 text">ELECTRONICS</div>
         
@@ -193,7 +193,9 @@ a:active {
     <div class="row">
       <div class="col-sm-4">
         <div>
-          <img src="images/sell.jpg" alt="laptop" style="margin-top: 10%;height: 300px;" class="rounded float-right">
+          <img src="{{url_for('static', filename='sell.jpg')}}" class="d-block w-50 p-0 pl-7 mx-auto"
+                            alt="..." />
+          <!-- <img src="static/sell.jpg" alt="laptop" style="margin-top: 10%;height: 300px;" class="rounded float-right"> -->
         </div>
 
       </div>
@@ -223,7 +225,7 @@ a:active {
   <div >
     <div class="row">
       <div class="col-sm-2 " >
-        <div class="pt-5"><img src="images/email.png" width="100px" style="margin-top: 10%;float: right;"></div>
+        <div class="pt-5"><img src="static/email.png" width="100px" style="margin-top: 10%;float: right;"></div>
 
       </div>
       <div class="col-sm-4 border-right pt-5" align="center" >
@@ -233,7 +235,7 @@ a:active {
 
       </div>
       <div class="col-sm-2 " >
-        <div><img src="images/bulb2.jpg" width="200px" style="margin-top: 8%" class="rounded float-right"></div>
+        <div><img src="static/bulb2.jpg" width="200px" style="margin-top: 8%" class="rounded float-right"></div>
 
       </div>
       <div class="col-sm-4 border-right pt-5" align="center" >
@@ -299,6 +301,4 @@ a:active {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
-
-</html>
+  {% endblock %}

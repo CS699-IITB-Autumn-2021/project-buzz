@@ -5,7 +5,7 @@
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}"> -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}">
 
 <!-- Bootstrap CSS -->
 <style>
@@ -134,18 +134,18 @@
                 <div class="col-8">
                     <div class="card p-0 mt-2">
                         <div class="card-body">
-                            <div class=" card-title ">TITLE</div>
-                            <div class="card-text">Posted on : 24/10/2021</div>
+                            <div class=" card-title ">{{title}}</div>
+                            <div class="card-text">{{postedon}}</div>
 
 
                         </div>
                         <div class="card-footer">
                             <div class="row m-0">
                                 <div class="col-6 tex   text-center">
-                                    <i class="far fa-thumbs-up px-2"></i>100
+                                    <i class="far fa-thumbs-up px-2"></i>{{likes}}
                                 </div>
                                 <div class="col-6 text-center">
-                                    <i class="far fa-thumbs-down px-2"></i>7
+                                    <i class="far fa-thumbs-down px-2"></i>{{dislikes}}
                                 </div>
                             </div>
                         </div>
@@ -153,9 +153,7 @@
                     <div class="card p-0 mt-2">
                         <div class="card-body">
                             <div class="card-title">Description</div>
-                            <div class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
-                                quidem fugiat doloribus temporibus excepturi praesentium, repudiandae et tempora iusto
-                                architecto est, quo fugit provident, quia modi quod vel earum a!</div>
+                            <div class="card-text">{{description}}</div>
 
                         </div>
                     </div>
@@ -171,7 +169,7 @@
                     <div class="card mt-2">
                         <div class="card-body bid  ">
                             <div class="bid2 ">
-                                <div id="headline" class="fs-5">Bidding Closing In</div>
+                                <div id="headline" class="fs-5 b">Bidding Closing In</div>
 
                                 
                                 <div id="the-final-countdown" class="fs-5 text-light bg-dark">
@@ -183,7 +181,7 @@
                     <div class="card p-0 pt-2 mt-2">
                         <div class="card-body">
                             <i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                            <span class=" fs-5">5000000000</span>
+                            <span class=" fs-5">{{price}}</span>
                         </div>
                     </div>
                     <div class="card p-0 pt-2 mt-2">
@@ -191,7 +189,7 @@
                             <button type="button" class="btn btn-success"><i class="fas fa-comments">
                                     Contact</i></button>
                         </div>
-                        <div class="mx-auto text-info"><i class="fas fa-mobile-alt"></i> 9876543210</div>
+                        <div class="mx-auto text-info"><i class="fas fa-mobile-alt"></i> {{contact_no}}</div>
                     </div>
 
                 </div>

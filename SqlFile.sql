@@ -80,12 +80,14 @@ CREATE TABLE credentials (
 
 CREATE TABLE products (
 	id integer  PRIMARY KEY AUTOINCREMENT,
-	price integer,
 	category_id integer default 1, 
 	user_id varchar, 
 	product_description text,
+	price integer default 0,
 	title text NOT NULL,
 	product_availability integer,
+	likes integer DEFAULT 0,
+	dislikes integer DEFAULT 0,
 	spam integer DEFAULT 0 ,
 	selling_option integer,
 	bid_id integer,
@@ -93,7 +95,7 @@ CREATE TABLE products (
 	created_at timestamp default current_timestamp,
 	updated_at timestamp default current_timestamp,
 	deleted_at timestamp ,
-	FOREIGN KEY(user_id) REFERENCES USER(user_id) ,
+	FOREIGN KEY(id) REFERENCES USER(user_id) ,
 	FOREIGN KEY(category_id) REFERENCES CATEGORIES(id)
 	FOREIGN KEY(bid_id) REFERENCES BID(id)
 	FOREIGN KEY(selling_option) REFERENCES selling_opt(id)

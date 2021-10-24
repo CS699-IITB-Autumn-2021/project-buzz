@@ -43,6 +43,25 @@ print(name)
 print(sex)
 print(email)
 print(contact)
+cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
+details = cur.fetchall()
+description = details[0][3]
+price = details[0][4]
+title=details[0][5]
+likes = details[0][7]
+dislikes =details[0][8]
+contact_no = details[0][20]
+postedon = details[0][13]
+seller = details[0][5]
+
+
+
+
+
+
+
+
 conn.close()
 
 
@@ -69,7 +88,14 @@ def detail():
     
 
     
-    return render_template('detail.html')
+    return render_template('detail.html',description =description,price =price,title=title,likes=likes,dislikes=dislikes ,contact_no=contact_no ,postedon=postedon ,seller=seller
+)
+
+@app.route('/index', methods=['GET', 'POST'])
+def home():
+    return render_template('index.html')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = NameForm()
