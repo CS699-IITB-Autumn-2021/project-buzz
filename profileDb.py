@@ -64,6 +64,12 @@ Bootstrap(app)
 # # # Flask-WTF requires an encryption key - the string can be anything
 app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
 
+@app.route('/detail', methods=['GET', 'POST'])
+def detail():
+    
+
+    
+    return render_template('detail.html')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = NameForm()
