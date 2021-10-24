@@ -81,7 +81,11 @@ for rows in records:
 
 # inserting a dummy test user into the database to test for chat functionality while developing
 query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-data = ['test-rollnumber', 'test-fname', 'test-lname', 'test@gmail.com', 919876543210, 12345, True]
+data = ['test-rollnumber', 'Jhonny', 'Sins', 'test@gmail.com', 919876543210, 12345, True]
+cur.execute(query, data)
+
+query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+data = ['test-rollnumber1', 'Nihal', 'Sargaiya', 'test1@gmail.com', 919876543219, 12346, True]
 cur.execute(query, data)
 conn.commit()
         

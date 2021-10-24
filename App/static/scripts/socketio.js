@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () =>{
     var socket = io();
 
-    // joining the users by default into a room so that they can chat right away
-    let current_room = "Lounge";
-    joinRoom("Lounge");
-
+    let current_room = null
     // rendering messages in the message display area
     socket.on('message', data => {
         const p = document.createElement('p');
@@ -37,10 +34,12 @@ document.addEventListener('DOMContentLoaded', () =>{
             if(new_room_to_join == current_room){
                 msg = `You are already in ${current_room} room`;
                 PrintSystemNotification(msg);
+                console.log(current_room)
             } else {
                 leaveRoom(current_room);
                 joinRoom(new_room_to_join);
                 current_room = new_room_to_join;
+                console.log(current_room)
             }
         }
    })

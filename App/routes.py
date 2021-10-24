@@ -4,6 +4,7 @@ from App.sso import *
 from App.otp import *
 from App.forms import PhoneNumberForm
 from App import conn, cur
+from App.chatDBOperations import *
 
 
 @app.route('/')
@@ -115,14 +116,39 @@ def chat():
     username = finalData['first_name'] + " " + finalData['last_name']
 
     # static rooms are defined in the below array: need to replace the list to a dynamic one
-    ROOMS = ['lounge', 'news', 'games', 'coding']
-    return render_template('chat.html', username=username, rooms = ROOMS)
+    # ROOMS = ['lounge', 'news', 'games', 'coding']
+    ROOMS = []
+    finalData = session.get("finalData")
+    currentUser = finalData['first_name'] + " " + finalData['last_name']
+    list_of_rooms = get_rooms_for_user(currentUser)
+    for room in list_of_rooms:
+        ROOMS.append(room['room_name'])
+    return render_template('chat.html', username=username, rooms=ROOMS)
 
 
 # dummy login for the test user - remove this once all testing is done
 @app.route("/dummylogin", methods=['GET', 'POST'])
 def dummyLogin():
     cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber' """)
+    records = cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
+
+
+@app.route("/dummylogin1", methods=['GET', 'POST'])
+def dummyLogin1():
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber1' """)
     records= cur.fetchall()
     print(records[0])
     finalData = {}
@@ -137,3 +163,23 @@ def dummyLogin():
     for rows in records:
         print(rows)
     return redirect(url_for('chat'))
+
+
+# dummy route to pass in the product owner name to the create room stuff
+# this in final must accept only POST request from the View-single-commodity-page(Wireframe reference) and must pass in
+# product owner name
+@app.route("/create-room", methods=['GET', 'POST'])
+def create_room():
+    if request.method == 'POST':
+        owner_name = request.form.get("owner")
+        print(owner_name)
+        finalData = session.get("finalData")
+        currentUser = finalData['first_name'] + " " + finalData['last_name']
+        list_of_rooms = get_rooms_for_user(currentUser)
+        for room in list_of_rooms:
+            if is_room_member(room['_id']['room_id'], owner_name):
+                return redirect(url_for("chat"))
+        roomname = currentUser + " " + owner_name + " chat room"
+        saveRoom(roomname, currentUser, owner_name)
+        return redirect(url_for("chat"))
+    return render_template("create-room.html")
