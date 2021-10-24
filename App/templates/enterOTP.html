@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Enter OTP
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <form action="/validateOTP" method="post">
+        <div class="container">
+            <label> Enter OTP </label></br>
+            <input class="form-control" type="text" name="otp" /></br>
+            <button class="btn btn-light" type="submit"> Login </button>
+        </div>
+    </form>
+</body>
+{% endblock %}

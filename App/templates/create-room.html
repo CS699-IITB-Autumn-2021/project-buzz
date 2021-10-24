@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Create Room
+{% endblock %}
+
+{% block content %}
+<h3>Chat with the owner</h3>
+<form action="/create-room" method="post">
+    <label>Owner Name: </label>
+    <br>
+    <input type="text" name="owner" autocomplete="OFF">
+    <br>
+    <button type="submit">CHAT WITH THE OWNER</button>
+</form>
+{% endblock %}

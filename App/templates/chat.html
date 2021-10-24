@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Section</title>
+</head>
+<body>
+    <!--Room Selection: Side nav bar to display the available rooms of a user-->
+    <div id="sidebar">
+        <h3>Chat Rooms</h3>
+        {% for room in rooms %}
+            <p class="select-room">{{ room }}</p>
+        {% endfor %}
+    </div>
+
+
+    <!--Main Chat area of the page-->
+    <div id="chat-area">
+        <!--Section to display messages-->
+        <div id="messages-display-area">
+
+        </div>
+
+        <!--Section for users to input chat text messages-->
+        <div id="message-input-area">
+            <input type="text" id="user-text" placeholder="type here" autocomplete="off">
+            <button type="button" id="send-message-button">SEND</button>
+        </div>
+    </div>
+
+    <!--Get Username-->
+    <script>
+        const username = `{{ username }}`;
+    </script>
+
+    <!--Custom JS file-->
+    <script src="{{ url_for('static', filename='scripts/chat.js') }}"></script>
+
+    <!--Socket io JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+
+    <!--JS for our chat app (client side stuff)-->
+    <script src="{{ url_for('static', filename='scripts/socketio.js') }}"></script>
+</body>
+</html>
