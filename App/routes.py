@@ -165,6 +165,44 @@ def dummyLogin1():
     return redirect(url_for('chat'))
 
 
+@app.route("/dummylogin2", methods=['GET', 'POST'])
+def dummyLogin2():
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber2' """)
+    records = cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
+
+
+@app.route("/dummylogin3", methods=['GET', 'POST'])
+def dummyLogin3():
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
+    records = cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
+
+
 # dummy route to pass in the product owner name to the create room stuff
 # this in final must accept only POST request from the View-single-commodity-page(Wireframe reference) and must pass in
 # product owner name

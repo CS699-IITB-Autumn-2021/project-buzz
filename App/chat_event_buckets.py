@@ -1,4 +1,4 @@
-from flask_socketio import send, join_room, leave_room
+from flask_socketio import send, join_room, leave_room, emit
 from App import socketio
 from time import localtime, strftime
 from App.chatDBOperations import save_message, get_room_by_roomname, get_messages
@@ -23,8 +23,8 @@ def join(data):
     list_of_messages = get_messages(room_id)
     if list_of_messages:
         for item in list_of_messages:
-            send(item['data'], room=item['data']['room'])
-    send({'msg': data['username'] + " has joined the " + data['room'] + " room"}, room=data['room'])
+            emit('load-previous-messages', item['data'])
+    send({'msg': data['username'] + " has joined the " + data['room']}, room=data['room'])
     pass
 
 
@@ -32,5 +32,5 @@ def join(data):
 def leave(data):
     if data['room']:
         leave_room(data['room'])
-        send({'msg': data['username'] + " has left the " + data['room'] + " room"}, room=data['room'])
+        send({'msg': data['username'] + " has left the " + data['room']}, room=data['room'])
     pass

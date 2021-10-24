@@ -79,13 +79,21 @@ for rows in records:
     print(rows)
 
 
-# inserting a dummy test user into the database to test for chat functionality while developing
+# inserting some dummy test user(S) into the database to test for chat functionality while developing
 query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
 data = ['test-rollnumber', 'Jhonny', 'Sins', 'test@gmail.com', 919876543210, 12345, True]
 cur.execute(query, data)
 
 query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
 data = ['test-rollnumber1', 'Nihal', 'Sargaiya', 'test1@gmail.com', 919876543219, 12346, True]
+cur.execute(query, data)
+
+query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+data = ['test-rollnumber2', 'Deeksha', 'kasture', 'test2@gmail.com', 919876543218, 12347, True]
+cur.execute(query, data)
+
+query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+data = ['test-rollnumber3', 'Test', 'User', 'test3@gmail.com', 919876543217, 12348, True]
 cur.execute(query, data)
 conn.commit()
         

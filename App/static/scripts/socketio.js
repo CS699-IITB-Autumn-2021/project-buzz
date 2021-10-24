@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () =>{
         p.onclick = () => {
             let new_room_to_join = p.innerHTML;
             if(new_room_to_join == current_room){
-                msg = `You are already in ${current_room} room`;
+                msg = `You are already in ${current_room}`;
                 PrintSystemNotification(msg);
                 console.log(current_room)
             } else {
@@ -62,4 +62,16 @@ document.addEventListener('DOMContentLoaded', () =>{
         p.innerHTML = msg;
         document.querySelector('#messages-display-area').append(p);
    }
+
+   // loading previous messages
+   socket.on('load-previous-messages', data=>{
+        const p = document.createElement('p');
+        const span_username = document.createElement('span');
+        const span_time_stamp = document.createElement('span');
+        const br = document.createElement('br');
+        span_username.innerHTML = data.username;
+        span_time_stamp.innerHTML = data.time_stamp;
+        p.innerHTML = span_username.outerHTML + br.outerHTML + data.msg + br.outerHTML + span_time_stamp.outerHTML;
+        document.querySelector('#messages-display-area').append(p);
+   })
 })
