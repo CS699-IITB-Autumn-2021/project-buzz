@@ -5,6 +5,14 @@ from App.otp import *
 from App.forms import PhoneNumberForm
 from App import conn, cur
 from App.chatDBOperations import *
+#my imports
+from flask import Flask, render_template, redirect, url_for
+from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm 
+from wtforms import StringField, SubmitField, validators
+from wtforms.validators import DataRequired
+from wtforms.fields.html5 import EmailField
+from wtforms.validators import InputRequired, Email
 
 @app.route('/')
 def ssoVerification():
@@ -220,3 +228,5 @@ def create_room():
         saveRoom(roomname, currentUser, owner_name)
         return redirect(url_for("chat"))
     return render_template("create-room.html")
+
+    
