@@ -15,7 +15,7 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Email
 
 from App.bingoClassifiedDbCode import seedDB
-
+import uuid
 
 seedDB()
 
@@ -194,11 +194,16 @@ def validateOTP():
             cur.execute("SELECT id,name FROM sex")
             records = cur.fetchall()
             sexData = {val:key for key,val in records}
+            userSex = 1
+            if sexData[finalData["sex"]]:
+                userSex = sexData[finalData["sex"]]
             # print(sexData)
             # print(records)
+            userId = str(uuid.uuid4())
+            session["userId"]=userId
             print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
             query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid,sex_id) VALUES(?,?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,sexData[finalData["sex"]]]
+            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,userSex]
             cur.execute(query, data)
             conn.commit()
             '''

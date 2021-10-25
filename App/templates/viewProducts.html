@@ -19,6 +19,11 @@
             {
                 vertical-align: bottom;
             }
+            .card-img, .card-img-top {
+                        height: 300px;
+                        object-fit: contain;
+                        width: auto;
+                    }
         </style>
         <title>Hello, world!</title>
 
@@ -94,17 +99,19 @@
 
                 <div class="row row-cols-1 row-cols-md-3 g-4 p-3 px-5">
                     {%for product in products%}
+
+                    {% if product[7]==1 %}
+  
                     <div class="col">
                         <!-- For loop logic of jinja template -->
                         
                         
                         <div class="card">
-                            <img src="{{url_for('static', filename='temp.jpeg')}} " class="card-img-top" />
+                            <img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" />
                             <div class="card-body">
                                 <div class="row">
                                     
                                     <div class="col-12">
-                                        
                                         <h5 class="card-title">{{product[0]}}</h5>
                                         <div>
                                             <div class="card-text">
@@ -130,14 +137,78 @@
                             
                             <div class="card-footer">
                                 <div class="row">
-                                    <div class="col-6   text-center">
-                                        <i class="fa fa-thumbs-up hvr-icon px-2"></i>50</div>
+                                    <div class="   text-center">
+                                        <!-- <i class="fa fa-thumbs-up hvr-icon px-2"></i>50</div>
                                         <div class="col-6 text-center">
                                             <i class="far fa-thumbs-down px-2"></i>0</div>
-                                        </div>
+                                        </div> -->
+                                        <span>Type : Fixed Price</span>
+
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+
+                            {% else %}
+                            <div class="col">
+                                <!-- For loop logic of jinja template -->
+                                <div class="card ">
+                                    <img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" />
+                                    <div class="card-body">
+                                        <div class="row">
+                                            
+                                            <div class="col-12">
+                                                
+                                                <h5 class="card-title">{{product[0]}}</h5>
+                                                <div>
+                                                    <div class="card-text">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span class=" fs-5">Bid base: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                                <span class=" fs-5">{{product[6]}}</span>
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <span class=" fs-5">Min Inc: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                                <span class=" fs-5">{{product[7]}}</span>
+                                                            </div>
+
+                                                        </div>
+                                                        <span class=" fs-5">Max bid: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                        <span class=" fs-5">{{product[9]}}</span>
+                                                        <br>                                                       
+                                                        <span class="d-flex justify-content-between" >                
+                                                            <span class="fs-6">
+                                                                <i class="fas fa-truck pe-2"></i>Qnt: x{{product[2]}}
+                                                            </span>
+                                                            <span class="my-auto" style="font-size: 12px;"><i class="far fa-clock text-muted" ></i><span class="text-posted "> {% set date = product[3].split(' ') %}{{date[0]}}</span></span>
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <!-- <div class="col-6   text-center"> -->
+                                                <!--  <i class="fa fa-thumbs-up hvr-icon px-2"></i>50</div> -->
+                                                <div class=" text-center">
+                                                    <span>Type : Bidding</span>
+                                                    <!-- <i class="far fa-thumbs-down px-2"></i>0</div> -->
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    {% endif %}
                             {%endfor%}
                 </div>
 
