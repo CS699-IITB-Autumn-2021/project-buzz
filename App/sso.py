@@ -61,5 +61,5 @@ def getData(accessToken, params):
     }
     params = "?" + str(params)
     response = requests.get(config["DATA_URL"] + params, headers=header).json()
-    print(params, header)
+    # print(params, header)
     return response

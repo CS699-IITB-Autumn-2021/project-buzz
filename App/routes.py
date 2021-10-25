@@ -180,28 +180,15 @@ def validateOTP():
     if 'response' in session:
         s = session['response']
         if s == otp:
-            # inserting the user if he's new to the website
-            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], int(phone_number[1:]), int(finalData['roll_number']), valid]
-            '''
-            # checking if user already exists
-            # change to appropriate redirection link later at present only flashing a message
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                if rows[0] == finalData['roll_number']:
-                    flash(f'User already exists:', category='danger')
-                    return render_template('enterOTP.html')
-            '''
             # inserting the user if he new to the website
             cur.execute("SELECT id,name FROM sex")
             records = cur.fetchall()
             sexData = {val:key for key,val in records}
-            # print(sexData)
-            # print(records)
-            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
-            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid,sex_id) VALUES(?,?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,sexData[finalData["sex"]]]
+            print(sexData)
+            print(records)
+            print(finalData, phone_number, type(phone_number), int(phone_number[3:]))
+            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
             # return render_template('enterOTP.html')
