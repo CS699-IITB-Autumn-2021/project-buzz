@@ -180,29 +180,11 @@ def validateOTP():
     if 'response' in session:
         s = session['response']
         if s == otp:
-            '''
-            # checking if user already exists
-            # change to appropriate redirection link later at present only flashing a message
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                if rows[0] == finalData['roll_number']:
-                    flash(f'User already exists:', category='danger')
-                    return render_template('enterOTP.html')
-            '''
-            # inserting the user if he new to the website
+            # inserting the user if he's new to the website
             query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
             data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], int(phone_number[1:]), int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
-            '''
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                print(rows[0])
-            print(finalData)
-            flash(f'User Created Successfully:', category='success')
-            '''
             # return render_template('enterOTP.html')
             return "First time login user successfully added to database, phone number also verified, redirect user to post-login landing page straight away"
         else:
