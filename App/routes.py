@@ -72,7 +72,7 @@ seedDB()
 
 
 
-conn.close()
+# conn.close()
 
 
 
@@ -191,8 +191,14 @@ def validateOTP():
                     return render_template('enterOTP.html')
             '''
             # inserting the user if he new to the website
-            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], int(phone_number[1:]), int(finalData['roll_number']), valid]
+            cur.execute("SELECT id,name FROM sex")
+            records = cur.fetchall()
+            sexData = {val:key for key,val in records}
+            # print(sexData)
+            # print(records)
+            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
+            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid,sex_id) VALUES(?,?,?,?,?,?,?,?) """
+            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,sexData[finalData["sex"]]]
             cur.execute(query, data)
             conn.commit()
             '''

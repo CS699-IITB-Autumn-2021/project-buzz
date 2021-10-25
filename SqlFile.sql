@@ -29,7 +29,7 @@ CREATE TABLE user (
 	first_name text,
 	last_name text,
 	email varchar NOT NULL,
-	contact_no integer NOT NULL,
+	contact_no varchar NOT NULL,
 	sex_id integer,
 	roll_no integer NOT NULL,
 	valid boolean NOT NULL,
