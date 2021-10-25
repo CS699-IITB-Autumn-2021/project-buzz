@@ -14,54 +14,56 @@ from wtforms.validators import DataRequired
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Email
 
+from App.bingoClassifiedDbCode import seedDB
 
 
+seedDB()
 
-import sqlite3
+# import sqlite3
 
-conn = sqlite3.connect('buzzDatabase.db')
-cur = conn.cursor()
-with open('SqlFile.sql') as f:
-    conn.executescript(f.read())
+# conn = sqlite3.connect('buzzDatabase.db')
+# cur = conn.cursor()
+# with open('SqlFile.sql') as f:
+#     conn.executescript(f.read())
     
 
 
-cur.execute("""INSERT INTO sex(name) VALUES("male") """)
-cur.execute("""INSERT INTO sex(name) VALUES("female") """)
-cur.execute("""INSERT INTO sex(name) VALUES("others") """)
-cur.execute("SELECT * FROM sex")
-records = cur.fetchall()
+# cur.execute("""INSERT INTO sex(name) VALUES("male") """)
+# cur.execute("""INSERT INTO sex(name) VALUES("female") """)
+# cur.execute("""INSERT INTO sex(name) VALUES("others") """)
+# cur.execute("SELECT * FROM sex")
+# records = cur.fetchall()
 
-cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
+# cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
+# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
 
 
-record = cur.fetchall()
-for data in record:
-    print(data)
+# record = cur.fetchall()
+# for data in record:
+#     print(data)
 
-fname = record[0][0]
-print(type(record))
-lname = record[0][1]
-name = fname+" "+lname
-sex = record[0][2]
-email = record[0][3]
-contact = record[0][4]
-print(name)
-print(sex)
-print(email)
-print(contact)
-cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
-cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
-details = cur.fetchall()
-description = details[0][3]
-price = details[0][4]
-title=details[0][5]
-likes = details[0][7]
-dislikes =details[0][8]
-contact_no = details[0][20]
-postedon = details[0][13]
-seller = details[0][5]
+# fname = record[0][0]
+# print(type(record))
+# lname = record[0][1]
+# name = fname+" "+lname
+# sex = record[0][2]
+# email = record[0][3]
+# contact = record[0][4]
+# print(name)
+# print(sex)
+# print(email)
+# print(contact)
+# cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+# cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
+# details = cur.fetchall()
+# description = details[0][3]
+# price = details[0][4]
+# title=details[0][5]
+# likes = details[0][7]
+# dislikes =details[0][8]
+# contact_no = details[0][20]
+# postedon = details[0][13]
+# seller = details[0][5]
 
 
 
