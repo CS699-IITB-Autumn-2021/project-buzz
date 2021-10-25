@@ -2,7 +2,7 @@ import sqlite3
 
 conn = sqlite3.connect('buzzDatabase.db')
 cur = conn.cursor()
-with open('bingoClassSqlFile.sql') as f:
+with open('SqlFile.sql') as f:
     conn.executescript(f.read())
 
 cur.execute("""INSERT INTO sex(name) VALUES("male") """)
