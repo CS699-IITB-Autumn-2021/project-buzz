@@ -1,6 +1,6 @@
 from App import conn, cur
 
-with open('bingoClassSqlFile.sql') as f:
+with open('SqlFile.sql') as f:
     conn.executescript(f.read())
 
 cur.execute("""INSERT INTO sex(sex_type) VALUES("male") """)
