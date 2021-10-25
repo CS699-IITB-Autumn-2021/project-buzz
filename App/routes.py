@@ -34,53 +34,49 @@ seedDB()
 # cur.execute("SELECT * FROM sex")
 # records = cur.fetchall()
 
-cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
+# cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
+# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
 
 
-record = cur.fetchall()
-for data in record:
-    print(data)
+# record = cur.fetchall()
+# for data in record:
+#     print(data)
 
-fname = record[0][0]
-print(type(record))
-lname = record[0][1]
-name = fname+" "+lname
-sex = record[0][2]
-email = record[0][3]
-contact = record[0][4]
-print(name)
-print(sex)
-print(email)
-print(contact)
-cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
-cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
-details = cur.fetchall()
-description = details[0][3]
-price = details[0][4]
-title=details[0][5]
-likes = details[0][7]
-dislikes =details[0][8]
-contact_no = details[0][20]
-postedon = details[0][13]
-seller = details[0][5]
-
-
-
+# fname = record[0][0]
+# print(type(record))
+# lname = record[0][1]
+# name = fname+" "+lname
+# sex = record[0][2]
+# email = record[0][3]
+# contact = record[0][4]
+# print(name)
+# print(sex)
+# print(email)
+# print(contact)
+# cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+# cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
+# details = cur.fetchall()
+# description = details[0][3]
+# price = details[0][4]
+# title=details[0][5]
+# likes = details[0][7]
+# dislikes =details[0][8]
+# contact_no = details[0][20]
+# postedon = details[0][13]
+# seller = details[0][5]
 
 
 
 
 
-conn.close()
 
 
 
-class NameForm(FlaskForm):
-    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
-    email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
+# conn.close()
 
-    submit = SubmitField('Submit')
+
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -95,16 +91,6 @@ def detail():
     
     return render_template('detail.html',description =description,price =price,title=title,likes=likes,dislikes=dislikes ,contact_no=contact_no ,postedon=postedon ,seller=seller
 )
-
-@app.route('/profile', methods=['GET', 'POST'])
-def index():
-    form = NameForm()
-    if form.validate_on_submit():
-        newemail = form.newemail.data
-        print(newemail)
-
-    
-    return render_template('profile.html',name=name,sex=sex,email=email,contact=contact,form=form)
 
 
 @app.route('/sso')
@@ -193,8 +179,11 @@ def validateOTP():
             # inserting the user if he new to the website
             cur.execute("SELECT id,name FROM sex")
             records = cur.fetchall()
+            print(records)
             sexData = {val:key for key,val in records}
             userSex = 1
+            print("dict",sexData)
+            print("heyyyyyyyyyyy",finalData["sex"])
             if sexData[finalData["sex"]]:
                 userSex = sexData[finalData["sex"]]
             userId = str(uuid.uuid4())

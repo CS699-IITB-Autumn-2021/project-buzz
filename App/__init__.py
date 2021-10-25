@@ -34,3 +34,4 @@ from App import viewProducts
 from App import myAds
 from App import addProducts
 from App import chat_event_buckets
+from App import profile

@@ -8,7 +8,7 @@ def seedDB():
 	cur.execute("""INSERT INTO sex(name) VALUES("male") """)
 	cur.execute("""INSERT INTO sex(name) VALUES("female") """)
 	cur.execute("""INSERT INTO sex(name) VALUES("others") """)
-	cur.execute("SELECT * FROM sex")
+	cur.execute("SELECT id,name FROM sex")
 	records = cur.fetchall()
 	for rows in records:
 		print(rows)
@@ -18,8 +18,8 @@ def seedDB():
 	cur.execute("""INSERT INTO selling_opt(name) VALUES("Donate") """)
 	cur.execute("SELECT * FROM selling_opt")
 	records = cur.fetchall()
-	for rows in records:
-		print(rows)
+	# for rows in records:
+	# 	print(rows)
 
 
 
@@ -33,8 +33,8 @@ def seedDB():
 
 	cur.execute("SELECT * FROM categories")
 	records = cur.fetchall()
-	for rows in records:
-		print(rows)
+	# for rows in records:
+	# 	print(rows)
 
 	cur.execute("""INSERT INTO tags(name) VALUES("Bucket") """)
 	cur.execute("""INSERT INTO tags(name) VALUES("Mug") """)
@@ -77,8 +77,8 @@ def seedDB():
 
 	cur.execute("SELECT * FROM tags")
 	records = cur.fetchall()
-	for rows in records:
-		print(rows)
+	# for rows in records:
+	# 	print(rows)
 	conn.commit()
 
 
