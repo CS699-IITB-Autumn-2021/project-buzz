@@ -13,7 +13,6 @@ import sqlite3
 basedir = os.path.abspath(os.path.dirname(__file__))
 from App import app
 
-Bootstrap(app)
 
 # Flask-WTF requires an encryption key - the string can be anything
 app.config['SECRET_KEY'] = 'this is secret'
