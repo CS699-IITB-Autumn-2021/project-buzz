@@ -84,8 +84,10 @@ def addProducts():
 		bidIncrement = form.bidIncrement.data
 		newProductId = str(uuid.uuid4())
 		query = """insert into products(id,category_id,user_id,product_description,title,product_availability,selling_option,price,bid_base,bid_inc) values(\'%s\',%d,1,\'%s\',\'%s\',%d,%d,%d,%d,%d)""" %(newProductId,int(category) ,description, title, int(quantity),int(type),int(price),int(bidPrice),int(bidIncrement))
+		insertData(query)
 		for photo in finalPhotos:
 			query = """insert into images(product_id,image_url) values(\'%s\',\'%s\')"""%(newProductId,photo)
+			insertData(query)
 		message = title+" Added in ."+category+" with "+description+" "+str(quantity)+" "+type+" "+tags
 	return render_template('addProduct.html', form=form, message=message ,tag_list=finalTaglist)
 
