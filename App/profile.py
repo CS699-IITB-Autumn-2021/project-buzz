@@ -48,6 +48,9 @@ class updateEmailForm(FlaskForm):
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
+    userid = session.get('userId')
+    if(userid == None):
+        return redirect('/')
     print(session)
     # fname = session.get('first_name')
     # lname = session.get('last_name')
@@ -71,12 +74,15 @@ def profile():
 
     form = updateEmailForm()
     if form.validate_on_submit():
+        
         newemail = form.newemail.data
         cur.execute("""Update user set email = $[newemail] where user_id = $[userId] """)
         finalData = session.get('finalData')
         finalData['email'] = newemail 
         session['finalData'] = finalData
         print("newwwwww sesssion",session)
+        
+        
 
        
         

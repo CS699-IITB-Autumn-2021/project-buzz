@@ -19,6 +19,7 @@ import uuid
 
 seedDB()
 
+
 # conn.close()
 
 
@@ -46,9 +47,7 @@ def logout():
     
     return redirect('/')
 
-@app.route('/index2', methods=['GET', 'POST'])
-def home2():
-    return render_template('index2.html')
+
 # @app.route('/header', methods=['GET', 'POST'])
 # def header():
 #     finalData = session.get('finalData')
@@ -59,7 +58,7 @@ def home2():
 
 @app.route('/detail', methods=['GET', 'POST'])
 def detail():
-    
+
     
 
     
@@ -190,6 +189,9 @@ def validateOTP():
 
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
+    userid = session.get('userId')
+    if(userid == None):
+        return redirect('/')
     finalData = session.get('finalData')
     username = finalData['first_name'] + " " + finalData['last_name']
 
