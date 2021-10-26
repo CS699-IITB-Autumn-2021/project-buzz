@@ -50,11 +50,32 @@ def logout():
 #     return render_template('header.html',fname=fname)
 
 
-@app.route('/detail', methods=['GET', 'POST'])
-def detail():
-    return render_template('detail.html', description=description, price=price, title=title, likes=likes,
-                           dislikes=dislikes, contact_no=contact_no, postedon=postedon, seller=seller
-                           )
+
+@app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
+def detail(productId):
+    #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+    id = productId
+    print("id id id is here",id)
+    cur.execute("Select * from products  where id=\'%s\' "%(id))
+    details = cur.fetchall()
+    userId = details[0][2]
+    cur.execute("Select * from user  where user_id=\'%s\' "%(userId))
+    userdetails = cur.fetchall()
+    print("here are details",details,userdetails)
+    description = details[0][3]
+    price = details[0][4]
+    title=details[0][5]
+    contact_no = userdetails[0][4]
+    postedon = details[0][13]
+    seller = userdetails[0][1] + " "+ userdetails[0][2]
+
+
+    # return ("your product id"+productId)
+    
+
+    
+    return render_template('detail.html',description =description,price =price,title=title,contact_no=contact_no ,postedon=postedon ,seller=seller
+)
 
 
 @app.route('/sso')
