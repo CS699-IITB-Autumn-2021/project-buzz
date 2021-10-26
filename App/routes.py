@@ -17,7 +17,7 @@ from wtforms.validators import InputRequired, Email
 from App.bingoClassifiedDbCode import seedDB
 import uuid
 
-seedDB()
+# seedDB()
 
 
 # conn.close()

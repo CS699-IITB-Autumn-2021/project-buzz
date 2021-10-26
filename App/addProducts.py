@@ -59,8 +59,6 @@ def addProducts():
 	# you must tell the variable 'form' what you named the class, above
 	# 'form' is the variable name used in this template: index.html
 	userId = session.get("userId")
-	userId = str(uuid.uuid4())
-	session["userId"]=userId
 	form = productForm()
 	message=""
 	tag_list = list(fetchEnumTable("tags","name"))
@@ -82,9 +80,16 @@ def addProducts():
 		type = form.type.data
 		tags = form.tags.data
 		price = form.price.data
-		type = form.type.data
 		bidPrice = form.bidPrice.data
 		bidIncrement = form.bidIncrement.data
+		if int(type)==2:
+			price=bidPrice
+		elif int(type)==3:
+			price = 0
+			bidIncrement=0
+			bidPrice=0
+		else:
+			bidPrice=0
 		newProductId = str(uuid.uuid4())
 		query = """insert into products(id,category_id,user_id,product_description,title,product_availability,selling_option,price,bid_base,bid_inc) values(\'%s\',%d,\'%s\',\'%s\',\'%s\',%d,%d,%d,%d,%d)""" %(newProductId,int(category),userId,description, title, int(quantity),int(type),int(price),int(bidPrice),int(bidIncrement))
 		print(insertData(query))
