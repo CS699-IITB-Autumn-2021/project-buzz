@@ -11,7 +11,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from wtforms.validators import DataRequired
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, IntegerField
 from wtforms.validators import InputRequired, Email
 
 from App.bingoClassifiedDbCode import seedDB
@@ -50,7 +50,11 @@ def logout():
 #     return render_template('header.html',fname=fname)
 
 
+class addBidForm(FlaskForm):
+    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
+    bid = IntegerField("BID ",  [InputRequired("add your bid here")])
 
+    submit = SubmitField('Submit')
 @app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
 def detail(productId):
     #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
@@ -71,10 +75,13 @@ def detail(productId):
 
 
     # return ("your product id"+productId)
-    
+    form= addBidForm()
+    if form.validate_on_submit():
+        bid = form.bid.data
+        print("your bid is ",bid)
 
     
-    return render_template('detail.html',description =description,price =price,title=title,contact_no=contact_no ,postedon=postedon ,seller=seller
+    return render_template('detail.html',description =description,price =price,title=title,contact_no=contact_no ,postedon=postedon ,seller=seller,form=form
 )
 
 
