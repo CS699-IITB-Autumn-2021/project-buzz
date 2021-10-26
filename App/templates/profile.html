@@ -39,8 +39,11 @@
 
 
 
-<div class="row mx-auto p-0 m-0 p-5">
-    <div class="col-sm-2 bg-danger">
+<div class="row mx-auto p-0 m-0 p-5 ">
+    <div class="col-2">
+        <div><img src="{{url_for('static', filename='images/profile.jpg')}}" class="rounded mx-auto d-block"
+                width="300px" height="400px"></div>
+
 
     </div>
 
@@ -110,7 +113,8 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <label for="Update-Alert" class="form-label">Are you sure you want to Update Phone number</label>
+                                    <label for="Update-Alert" class="form-label">Are you sure you want to Update Phone
+                                        number</label>
                                     <!--
                                     <input type="email" class="form-control" id="exampleInputEmail1"
                                         aria-describedby="emailHelp" placeholder="Enter contact">
@@ -119,7 +123,8 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='updatePhoneNumber'">Proceed</button>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="location.href='updatePhoneNumber'">Proceed</button>
                                 </div>
                             </div>
                         </div>
@@ -145,10 +150,9 @@
 
 </div>
 
-</div>
-</div>
 
-</div>
+</br>
+<div class="p-0 "></div>
 {% include "footer.html" %}
 
 

@@ -60,6 +60,9 @@ def addProducts():
 	# 'form' is the variable name used in this template: index.html
 	userId = session.get("userId")
 	print(userId)
+	userid = session.get('userId')
+	if(userid == None):
+		return redirect('/')
 	form = productForm()
 	message=""
 	tag_list = list(fetchEnumTable("tags","name"))
