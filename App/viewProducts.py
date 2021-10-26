@@ -17,13 +17,13 @@ def fetchEnumTable(tableName,columns ):
 @app.route('/viewProducts')
 def viewProducts():
 	categoty = fetchEnumTable("categories","*")
-	data = fetchEnumTable("products","title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option")	
+	data = fetchEnumTable("products where deleted_at is NULL and product_availability>0","title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option")	
 	print(data)
 	finalData =[]
 	for element in data:
 		print("I am element ",element)
 		pics=[]
-		q = "images where product_id=\'%s\'"%(element[4])
+		q = "images where product_id=\'%s\'  "%(element[4])
 		pics = fetchEnumTable(q,"image_url")[0][0]	
 		maxBid = fetchEnumTable("bid where product_id=\'%s\'"%(element[4]),"max(bid_price)")
 		print("======\t",pics,maxBid)

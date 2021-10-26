@@ -22,7 +22,7 @@ def fetchEnumTable(tableName,columns ):
 def myAds():
 	print("I am session:",session)
 	userId = session.get("userId")
-	data = fetchEnumTable("products where user_id=\'%s\' and deleted_at is NULL"%(userId),"title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option,user_id")	
+	data = fetchEnumTable("products where user_id=\'%s\' and deleted_at is NULL and product_availability>0"%(userId),"title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option,user_id")	
 	print(data)
 	finalData =[]
 	for element in data:
@@ -48,6 +48,35 @@ def myAds():
 def deleteMyAds(productId):
 	userId = session.get("userId")
 	q = """update products set deleted_at=\'%s\' where user_id=\'%s\' and id=\'%s\'"""%(datetime.now(),userId,productId)
+	print(q)
+	cur.execute(q)
+	conn.commit()
+	# print("I am session:",session)
+	# userId = session.get("userId")
+	# data = fetchEnumTable("products where user_id=\'%s\' and deleted_at is NULL"%(userId),"title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option,user_id")	
+	# print(data)
+	# finalData =[]
+	# for element in data:
+	# 	pics=[]
+	# 	q = "images where product_id=\'%s\' "%(element[4])
+	# 	pics = fetchEnumTable(q,"image_url")[0][0]	
+	# 	maxBid = fetchEnumTable("bid where product_id=\'%s\'"%(element[4]),"max(bid_price)")
+	# 	if maxBid[0][0] is None:
+	# 		maxBid="None"
+	# 	else:
+	# 		maxBid=maxBid[0][0]
+	# 	print(maxBid,"this is max bid")
+	# 	temp = list(element)
+	# 	temp.append(pics)
+	# 	temp.append(maxBid)
+	# 	finalData.append(tuple(temp))
+	# print(finalData)
+	return redirect("/myAds")
+
+@app.route('/myAds/sold/<productId>')
+def sold(productId):
+	userId = session.get("userId")
+	q = """update products set product_availability=\'%d\' where user_id=\'%s\' and id=\'%s\'"""%(0,userId,productId)
 	print(q)
 	cur.execute(q)
 	conn.commit()

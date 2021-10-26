@@ -24,6 +24,10 @@
                         object-fit: contain;
                         width: auto;
                     }
+            .card-footer a{
+                        text-decoration: none;
+                        color: black;
+            }
         </style>
         <title>My Ads</title>
 
@@ -139,11 +143,14 @@
                                 <div class="row M-0">
                                     <div class="d-flex col-6  text-center">
                                         <div class="">
-                                            
-                                            <i class="fa fa-box  px-2"></i>Mark as sold</div>
+                                            <a href="/myAds/sold/{{product[4]}}">
+                                                <i class="fa fa-box  px-2"></i>Mark as sold</div>
+                                            </a>
                                         </div>
                                         <div class="col-6 text-center ">
-                                            <i class="far fa-trash-alt px-2 "></i>Delete</div>
+                                            <a href="/myAds/delete/{{product[4]}}">
+                                                <i class="far fa-trash-alt px-2 "></i>Delete</div>
+                                             </a>
                                         </div>
                                         
 
@@ -203,11 +210,16 @@
                                         <div class="row M-0">
                                             <div class="d-flex col-6  text-center">
                                                 <div class="">
+                                            <a href="/myAds/sold/{{product[4]}}">
                                                     
                                                     <i class="fa fa-box  px-2"></i>Mark as sold</div>
+                                            </a>
                                                 </div>
-                                                <a href="/myAds/delete/{{product[4]}}"><div class="col-6 text-center ">
-                                                    <i class="far fa-trash-alt px-2 "></i>Delete</div>
+                                                <div class="col-6 text-center ">
+                                                    <a href="/myAds/delete/{{product[4]}}" class="fw-bold ">
+                                                        <i class="far fa-trash-alt px-2 "></i>Delete
+                                                    </a>
+                                                </div>
                                                 </div>
                                                 
         
