@@ -35,16 +35,18 @@
                 {% include "header.html" %}
                 {% block content %}
                 <nav class="nav flex-column" style="padding-left: 25px !important;">
+                    <form action="all" id="filter">
+
                     <div>
                         <h5 class="pl-1">
                             Price Range
                         </h5>
-                        <input type="range" class="form-range" id="customRange1" value="5000" min="100" max="100000" oninput='this.nextElementSibling.children[2].value= this.value'>
+                        <input type="range" class="form-range"  onchange="this.form.submit()" id="customRange1" value="5000" min="100" max="100000" oninput='this.nextElementSibling.children[2].value= this.value'>
                         <div class="input-group mb-3">
                             <span class="input-group-text">0</span>
                             <span class="input-group-text"> to </span>
                             
-                            <input type="text"  value="5000" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                            <input type="text" id="max-price"  onchange="this.form.submit()" name=price value="5000" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                           </div>
                     </div>
                     <h5 class="pl-1">
@@ -53,19 +55,19 @@
                     <ul class="list-group">
 
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="gender" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="bid" name="type" type="radio" value="bid" onclick="this.form.submit()" aria-label="...">
                             Bid
                         </li>
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="gender" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="fixed" name="type" type="radio" onclick="this.form.submit()" value="fixed" aria-label="...">
                             Fixed Price
                         </li>
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="gender" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="free" name="type" type="radio" onclick="this.form.submit()" value="free" aria-label="...">
                             Free
                         </li>
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="gender" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="any" name="type" type="radio" onclick="this.form.submit()" value="any" aria-label="...">
                             Any
                         </li>
                     </ul>
@@ -75,22 +77,20 @@
                     <ul class="list-group ">
 
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="date" name="sort" type="radio" onclick="this.form.submit()" value="date" aria-label="...">
                             Recent
                         </li>
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
-                            Most Liked
-                        </li>
-                        <li class="list-group-item">
-                            <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="priceHL" name="sort" type="radio" onclick="this.form.submit()" value="priceHL" aria-label="...">
                             Price High to low
                         </li>
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" name="sort" type="radio" value="" aria-label="...">
+                            <input class="form-check-input me-1" id="priceLH" name="sort" type="radio" onclick="this.form.submit()" value="priceLH" aria-label="...">
                             Price low to high
                         </li>
                     </ul>
+                </form>
+
                 </nav>
             </div>
 
@@ -166,19 +166,28 @@
                                                     <div class="card-text">
                                                         <div class="d-flex justify-content-between">
                                                             <div>
-                                                                <span class=" fs-5">Bid base: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                                <span class=" fs-5">{{product[6]}}</span>
+                                                                <span class=" fs-7">Bid base: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                                <span class=" fs-7">{{product[5]}}</span>
                                                             </div>
                                                             <br>
                                                             <div>
-                                                                <span class=" fs-5">Min Inc: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                                <span class=" fs-5">{{product[7]}}</span>
+                                                                <span class=" fs-7">Min Inc: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                                <span class=" fs-7">{{product[6]}}</span>
                                                             </div>
 
                                                         </div>
-                                                        <span class=" fs-5">Max bid: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
-                                                        <span class=" fs-5">{{product[9]}}</span>
-                                                        <br>                                                       
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                        <span class=" fs-7">Max bid: </span><i class="fas fa-rupee-sign pb-2 pt-0" style="font-size: 18px;"></i>
+                                                               
+                                                                <span class=" fs-7">{{product[9]}}</span>
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <span class="fs-7" id="bidTimeLeft">{{product[10]}}</span>
+                                                            </div>
+
+                                                        </div>
                                                         <span class="d-flex justify-content-between" >                
                                                             <span class="fs-6">
                                                                 <i class="fas fa-truck pe-2"></i>Qnt: x{{product[2]}}
@@ -222,7 +231,30 @@
 
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            console.log(params["price"] !== undefined)
+            if(params["price"] !== undefined){
+                document.getElementById("max-price").value = params["price"];
+                document.getElementById("customRange1").value = params["price"];
+            }
+            if(params["type"] !== undefined){
+                document.getElementById(params["type"]).checked=true;
+            }
+            else{
+                document.getElementById('any').checked=true;
 
+            }
+            if(params["sort"] !== undefined){
+                document.getElementById(params["sort"]).checked=true;
+            }
+            else
+                document.getElementById("date").checked=true;
+            var path = window.location.pathname;
+            var page = path.split("/").pop();
+            document.getElementById("filter").action=page;
+        </script>
         <!-- Option 2: Separate Popper and Bootstrap JS -->
         <!--
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
