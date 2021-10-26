@@ -32,11 +32,11 @@
 
 
 
-                    
-                                    
-                                    
 
-                       
+
+
+
+
 
 
 <div class="row mx-auto p-0 m-0 p-5">
@@ -58,54 +58,26 @@
                     <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{sex}}>
                 </div>
             </div>
-            <div class="mb-3 row ">
+            <div class="mb-3 row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-6 d-flex justify-content-start ">
-                    <div class="input-group">
-
-                        <input type="text" readonly class="form-control-plaintext form-control" id="staticEmail"
-                            value={{email}}>
-                        <div class="input-group-append">
-                            <span class="input-group-text"><span data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"><i class="fas fa-edit"></i></span>
-
-                        </div>
-                    </div>
-
-                    <!-- Button trigger modal -->
-                    {%block modals%}
-                    <span data-bs-toggle="modal" <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Update Email</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <label for="exampleInputEmail1"></label>
-                                        <!-- <input type="email" class="form-control" id="exampleInputEmail1"
-                                                    aria-describedby="emailHelp" placeholder="Enter email"> -->
-                                        {{wtf.form_field(form.email,class="form-control")}}
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                                        {{wtf.form_field(form.submit,class="form-control")}}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{email}}>
                 </div>
             </div>
+            <div class="mb-3 row ">
+
+
+
+                <!-- Button trigger modal -->
+                {%block modals%}
+
+
+
+
+
+
+            </div>
+
             <div class="mb-3 row ">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Contact</label>
                 <div class="col-sm-6 ">
@@ -154,54 +126,30 @@
 
                 </div>
             </div>
-
-
-        </form>
-
-
-
-
-
-
-
-
-
-
-
     </div>
 
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
 </div>
 </div>
 
 </div>
-<footer>
-    <div style="
-  background-color: rgb(11, 11, 61);
-  height: 300px;
-">
-
-        <div class="row d-flex justify-content-evenly m-0 p-4">
-            <div class="col-sm-6">
-                <div class="fs-5 text-light px-4">About Us</div>
-                <div class="text-muted text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-                    error nulla odit repellat itaque distinctio iure veritatis repellendus? Itaque consequuntur
-                    eaque, reiciendis odit accusantium officia ipsam dolores velit quasi recusandae.
-                </div>
+{% include "footer.html" %}
 
 
-            </div>
-            <div class="col-sm-4">
-                <div class="fs-6 text-light">Happy Customers </div>
-                <div class="fs-6 text-light ">Products Sold</div>
-
-
-            </div>
-
-
-        </div>
-
-    </div>
-</footer>
 
 <!-- Optional JavaScript; choose one of the two! -->
 

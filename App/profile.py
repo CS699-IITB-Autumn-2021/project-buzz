@@ -19,13 +19,13 @@ with open('SqlFile.sql') as f:
 
 
 # cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id=userId and user.sex_id = sex.id """)
+# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
 
 
 # record = cur.fetchall()
 # for data in record:
 #     print(data)
-
+# print(record)
 # fname = record[0][0]
 # print(type(record))
 # lname = record[0][1]
@@ -34,24 +34,54 @@ with open('SqlFile.sql') as f:
 # email = record[0][3]
 # contact = record[0][4]
 
+# name = "tempname"
+# sex = "female"
+# email = "abc@fmailo.com"
+# contact = "9876543210"
 
-class NameForm(FlaskForm):
+
+class updateEmailForm(FlaskForm):
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
     email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
 
     submit = SubmitField('Submit')
+
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     print(session)
-    fname = session.get('fname')
-    lname = session.get('lname')
+    # fname = session.get('first_name')
+    # lname = session.get('last_name')
+    # print("last name is ",lname)
+    finalData = session.get('finalData')
+    fname = finalData['first_name']
+    # print("hey my name is ",fname)
+    lname = finalData['last_name']
+    name = fname + " " + lname
+    email = finalData['email']
+    sex = finalData['sex']
+    contact = session.get('number')
 
 
-    form = NameForm()
+
+
+
+
+    print(finalData)
+
+
+    form = updateEmailForm()
     if form.validate_on_submit():
         newemail = form.newemail.data
-        print(newemail)
+        cur.execute("""Update user set email = $[newemail] where user_id = $[userId] """)
+        finalData = session.get('finalData')
+        finalData['email'] = newemail 
+        session['finalData'] = finalData
+        print("newwwwww sesssion",session)
+
+       
+        
+       
 
     
-    return render_template('profile.html',name=name,sex=sex,email=email,contact=contact,form=form)
+    return render_template('profile.html',fname=fname,name=name,sex=sex,email=email,contact=contact,form=form)
 

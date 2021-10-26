@@ -29,6 +29,15 @@ seedDB()
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
+@app.route('/index2', methods=['GET', 'POST'])
+def home2():
+    return render_template('index2.html')
+# @app.route('/header', methods=['GET', 'POST'])
+# def header():
+#     finalData = session.get('finalData')
+#     fname = finalData['first_name']
+#     return render_template('header.html',fname=fname)
+
 
 
 @app.route('/detail', methods=['GET', 'POST'])
@@ -149,7 +158,7 @@ def validateOTP():
             flash(f'User Created Successfully:', category='success')
             '''
             # return render_template('enterOTP.html')
-            return "First time login user successfully added to database, phone number also verified, redirect user to post-login landing page straight away"
+            return redirect(url_for('index2'))
         else:
             flash(f'Wrong OTP:', category='danger')
             return render_template('enterOTP.html')
