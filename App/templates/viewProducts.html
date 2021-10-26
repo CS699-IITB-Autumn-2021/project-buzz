@@ -107,7 +107,7 @@
                         
                         
                         <div class="card">
-<a href='detail'><img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" /></a>
+<a href='detail/{{product[4]}}'><img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" /></a>
                             <div class="card-body">
                                 <div class="row">
                                     
@@ -150,18 +150,68 @@
                         </div>
                     </div>
 
+                    {% elif product[7]==3 %}
+                    <div class="col">
+                        <!-- For loop logic of jinja template -->
+                        
+                        
+                        <div class="card">
+<a href='detail/{{product[4]}}'><img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" /></a>
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                    <div class="col-12">
+<a href='detail/{{product[4]}}'> <h5 class="card-title">{{product[0]}}</h5></a>
+                                        <div>
+                                            <div class="card-text">
+                            
+                                                <br>
+                                                <span class="d-flex justify-content-between" >                
+                                                    <span class="fs-6">
+                                                        <i class="fas fa-truck pe-2"></i>Qnt: x{{product[2]}}
+                                                    </span>
+                                                    <span class="my-auto" style="font-size: 12px;"><i class="far fa-clock text-muted" ></i><span class="text-posted "> {% set date = product[3].split(' ') %}{{date[0]}}</span></span>
+                                                </span>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="   text-center">
+                                        <!-- <i class="fa fa-thumbs-up hvr-icon px-2"></i>50</div>
+                                        <div class="col-6 text-center">
+                                            <i class="far fa-thumbs-down px-2"></i>0</div>
+                                        </div> -->
+                                        <span>Type : Donate</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 
                             {% else %}
                             <div class="col">
                                 <!-- For loop logic of jinja template -->
                                 <div class="card ">
-                                    <img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" />
+                                    <a href='detail/{{product[4]}}'><img src="{{url_for('static', filename='./uploads/'+product[8])}} " class="card-img-top" /></a>
                                     <div class="card-body">
                                         <div class="row">
                                             
                                             <div class="col-12">
                                                 
-                                                <h5 class="card-title">{{product[0]}}</h5>
+                                                <a href='detail/{{product[4]}}'><h5 class="card-title">{{product[0]}}</h5></a>
                                                 <div>
                                                     <div class="card-text">
                                                         <div class="d-flex justify-content-between">
