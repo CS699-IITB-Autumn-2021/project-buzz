@@ -56,9 +56,26 @@ def logout():
 
 
 
-@app.route('/detail', methods=['GET', 'POST'])
-def detail():
+@app.route('/detail/<productId>', methods=['GET', 'POST'])
+def detail(productId):
+    #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+    id = productId
+    print("id id id is here",id)
+    cur.execute("Select * from products  where id=\'%s\' "%(id))
+    details = cur.fetchall()
+    userId = details[0][2]
+    cur.execute("Select * from user  where user_id=\'%s\' "%(userId))
+    userdetails = cur.fetchall()
+    print("here are details",details,userdetails)
+    description = details[0][3]
+    price = details[0][4]
+    title=details[0][5]
+    contact_no = userdetails[0][4]
+    postedon = details[0][13]
+    seller = userdetails[0][1]
 
+
+    return ("your product id"+productId)
     
 
     
