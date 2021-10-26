@@ -95,6 +95,11 @@ def detail(productId):
     if form.validate_on_submit():
         bid = form.bid.data
         print("your bid is ",bid)
+        userid=session.get('userId')
+        cur.execute("Insert into bid(product_id,user_id,bid_price) values(\'%s\','%s\','%s\') "%(id,userid,bid))
+        cur.execute("select * from bid")
+        record = cur.fetchall()
+        print("here is our bid entry",record)
 
     
     return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
