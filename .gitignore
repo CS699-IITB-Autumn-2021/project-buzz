@@ -131,5 +131,11 @@ dmypy.json
 # Pycharm
 .idea/
 
+#mac
+.Ds_Store
+
 #uploaded images
-./App/uploads
+App/uploads/
+
+#DB
+buzzDatabase.db

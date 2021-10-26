@@ -1,0 +1,132 @@
+body {
+  background-color: ;
+}
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    border-right: 7px solid #17a2b8;
+    overflow-y : auto;
+    background-color: #345B63
+  }
+
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: white;
+}
+
+.sidenav .closebtn :hover{
+    color: black;
+}
+
+.toggle-button{
+  position:fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #17a2b8;
+  color : #F7F6F2;
+  border-width: 5px;
+  border-color: white;
+}
+
+.toggle-button :hover{
+  background-color: #17a2b8;
+  color: black;
+}
+
+#sidebar p {
+    padding-left: 1em;
+    padding-right:1em;
+    color : #F7F6F2
+
+}
+
+#sidebar p:hover {
+    background-color: #17a2b8;
+    color: black;
+}
+
+#sidebar h3 {
+    padding-left: 0.5em;
+    color : black;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#chat-area {
+    width: 100%;
+    margin-top: 2em;
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+#message-input-area {
+    width: 100%;
+    padding-left: 1em;
+    padding-right: 1em;
+    bottom: 0;
+}
+
+
+.other-message {
+    margin-left: 1em;
+    margin-right: 30%;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 10px;
+    border-color: #17a2b8;
+    border-width: 3px;
+    border-style: solid;
+    background-color: #D4ECDD;
+    width: 70%;
+}
+
+.own-message {
+    margin-right:1em;
+    margin-left: 30%;
+    padding: 0.5em 0.5em 0.5em 1em;
+    border-radius: 10px;
+    border-color: #17a2b8;
+    border-width: 3px;
+    border-style: solid;
+    background-color: #F0F5F9;
+    width: 70%;
+}
+
+.system-notification {
+    padding-left: 1em;
+    padding-right: 1em;
+    color: #656d78;
+    font-size:0.9em;
+}
+
+.timestamp {
+    color: #656d78;
+    font-size:0.7em;
+}
+
+.other-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #17a2b8;
+}
+
+.own-username {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #1E2022;
+}

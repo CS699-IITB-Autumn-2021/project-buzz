@@ -88,11 +88,20 @@
 
 
     {% include "header.html" %}
+    <!-- <a href='https://www.freepik.com/vectors/sale'>Sale vector created by katemangostar - www.freepik.com</a> -->
     {% block content %}
-    <a href='https://www.freepik.com/vectors/sale'>Sale vector created by katemangostar - www.freepik.com</a>
-        <div class="container ">
+    <div class="container ">
             <div class="mt-5 row ">
+                <div class=" col-4" style="background: url({{url_for('static', filename='images/addProduct.jpg')}}); 
+                background-position: center;
+                /* width: 100; */
+                background-size: contain;
+                background-repeat: no-repeat;">
+                    <!-- <img src="{{url_for('static', filename='images/addProduct.jpg')}}"></img> -->
+                </div>
                 <div class="col-md-8  p-2  col-lg-6 mx-lg-auto mx-md-auto">
+                     <h1 class="pb-3"><i class="far fa-plus-square pe-2"></i>Add new product</h1>
+
                     <form method="POST" enctype="multipart/form-data">
                         {{ form.hidden_tag() }}
                         <span class="d-flex">
@@ -126,7 +135,7 @@
                                         <div class="d-flex mb-2 justify-content-between col-7">
                                             {{ wtf.form_field(form.type,id="sellingTypeId") }}
                                         </div>
-                                        <div id="fixedPriceContainer" class="animate__animated d-none m-0 ">
+                                        <div id="fixedPriceContainer" class="animate__animated  m-0 ">
                                             {{ wtf.form_field(form.price,id="price",class="form-control") }}
                                         </div>
                                         <div id="bidPriceContainer" class="animate__animated d-none  m-0   ">
@@ -156,6 +165,7 @@
                 </div>
             </div>
         </div>
+        {% include "footer.html"%}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
         <script>

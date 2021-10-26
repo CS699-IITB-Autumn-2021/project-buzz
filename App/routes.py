@@ -5,106 +5,113 @@ from App.otp import *
 from App.forms import PhoneNumberForm
 from App import conn, cur
 from App.chatDBOperations import *
-#my imports
+# my imports
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm 
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
-from wtforms.validators import DataRequired
-from wtforms.fields.html5 import EmailField
+from wtforms.validators import DataRequired, NumberRange
+from wtforms.fields.html5 import EmailField, IntegerField
 from wtforms.validators import InputRequired, Email
 
 from App.bingoClassifiedDbCode import seedDB
-
+import uuid
 
 seedDB()
-
-# import sqlite3
-
-# conn = sqlite3.connect('buzzDatabase.db')
-# cur = conn.cursor()
-# with open('SqlFile.sql') as f:
-#     conn.executescript(f.read())
-    
-
-
-# cur.execute("""INSERT INTO sex(name) VALUES("male") """)
-# cur.execute("""INSERT INTO sex(name) VALUES("female") """)
-# cur.execute("""INSERT INTO sex(name) VALUES("others") """)
-# cur.execute("SELECT * FROM sex")
-# records = cur.fetchall()
-
-# cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
-
-
-# record = cur.fetchall()
-# for data in record:
-#     print(data)
-
-# fname = record[0][0]
-# print(type(record))
-# lname = record[0][1]
-# name = fname+" "+lname
-# sex = record[0][2]
-# email = record[0][3]
-# contact = record[0][4]
-# print(name)
-# print(sex)
-# print(email)
-# print(contact)
-# cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
-# cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
-# details = cur.fetchall()
-# description = details[0][3]
-# price = details[0][4]
-# title=details[0][5]
-# likes = details[0][7]
-# dislikes =details[0][8]
-# contact_no = details[0][20]
-# postedon = details[0][13]
-# seller = details[0][5]
-
-
-
-
-
-
 
 
 # conn.close()
 
 
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    userid = session.get('userId')
+    print("userid", userid)
+    if userid == None:
+        userid = ""
 
-class NameForm(FlaskForm):
+    return render_template('index.html', userid=userid)
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    userid = session.get('userId')
+    userid = ""
+
+    session.clear()
+
+    return redirect('/')
+
+
+# @app.route('/header', methods=['GET', 'POST'])
+# def header():
+#     finalData = session.get('finalData')
+#     fname = finalData['first_name']
+#     return render_template('header.html',fname=fname)
+
+
+class addBidForm(FlaskForm):
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
-    email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
+    bid = IntegerField("BID ",  [InputRequired("add your bid here")])
 
     submit = SubmitField('Submit')
 
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    return render_template('index.html')
+class userRatingForm(FlaskForm):
+    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
+    rating = IntegerField("User Rating ",  [InputRequired("Put user rating here"),NumberRange(min=0, max=10, message='Please insert value between 0 and 10')])
+    submit = SubmitField('Submit')
 
-
-@app.route('/detail', methods=['GET', 'POST'])
-def detail():
-    
-
-    
-    return render_template('detail.html',description =description,price =price,title=title,likes=likes,dislikes=dislikes ,contact_no=contact_no ,postedon=postedon ,seller=seller
-)
-
-@app.route('/profile', methods=['GET', 'POST'])
-def index():
-    form = NameForm()
+@app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
+def detail(productId):
+    #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+    id = productId
+    print("id id id is here",id)
+    cur.execute("Select * from products  where id=\'%s\' "%(id))
+    details = cur.fetchall()
+    userId = details[0][2]
+    cur.execute("Select * from user  where user_id=\'%s\' "%(userId))
+    userdetails = cur.fetchall()
+    # print("here are details",details,userdetails)
+    description = details[0][3]
+    price = details[0][4]
+    title=details[0][5]
+    contact_no=""
+    contact_no = userdetails[0][4]
+    postedon = details[0][13]
+    seller=""
+    seller = userdetails[0][1] + " "+ userdetails[0][2]
+    cur.execute("Select image_url from images  where product_id=\'%s\' "%(id))
+    images = cur.fetchall()
+    sellingOption = details[0][10]
+    seller = userdetails[0][1] + " "+ userdetails[0][2]
+    print("sell option",sellingOption)
+    cur.execute("Select avg(rating) from rating  where user_id=\'%s\' "%(userId))
+    showRatingValue = cur.fetchall()[0][0]
+    print(showRatingValue)
+    # return ("your product id"+productId)
+    form= addBidForm()
+    ratingForm = userRatingForm()
+    if ratingForm.validate_on_submit():
+        rating = ratingForm.rating.data
+        print("your bid is ",rating)
+        userid=session.get('userId')
+        cur.execute("Insert into rating(user_id,rating) values(\'%s\',%d) "%(userId,rating))
+        cur.execute("select * from rating")
+        record = cur.fetchall()
+        print("here is our rating entry",record)
     if form.validate_on_submit():
-        newemail = form.newemail.data
-        print(newemail)
+        bid = form.bid.data
+        print("your bid is ",bid)
+        userid=session.get('userId')
+        cur.execute("Insert into bid(product_id,user_id,bid_price) values(\'%s\','%s\','%s\') "%(id,userid,bid))
+        cur.execute("select * from bid")
+        record = cur.fetchall()
+        print("here is our bid entry",record)
 
     
-    return render_template('profile.html',name=name,sex=sex,email=email,contact=contact,form=form)
+    return render_template('detail.html',showRatingValue=showRatingValue ,images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
+)
 
 
 @app.route('/sso')
@@ -180,37 +187,27 @@ def validateOTP():
     if 'response' in session:
         s = session['response']
         if s == otp:
-            '''
-            # checking if user already exists
-            # change to appropriate redirection link later at present only flashing a message
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                if rows[0] == finalData['roll_number']:
-                    flash(f'User already exists:', category='danger')
-                    return render_template('enterOTP.html')
-            '''
             # inserting the user if he new to the website
-            cur.execute("SELECT id,name FROM sex")
-            records = cur.fetchall()
-            sexData = {val:key for key,val in records}
-            # print(sexData)
-            # print(records)
-            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
-            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid,sex_id) VALUES(?,?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,sexData[finalData["sex"]]]
+            sexData = {}
+            sexData["female"] = 1
+            sexData["male"] = 2
+            sexData["other"] = 3
+
+            # sexData = {val:key for key,val in records}
+            userSex = 1
+            print("dict", sexData)
+            print("heyyyyyyyyyyy", finalData["sex"])
+            if finalData["sex"]:
+                userSex = sexData[finalData["sex"]]
+            userId = str(uuid.uuid4())
+            session["userId"] = userId
+            print(finalData, phone_number, type(phone_number), int(phone_number[3:]))
+            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]),
+                    int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
-            '''
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                print(rows[0])
-            print(finalData)
-            flash(f'User Created Successfully:', category='success')
-            '''
-            # return render_template('enterOTP.html')
-            return "First time login user successfully added to database, phone number also verified, redirect user to post-login landing page straight away"
+            return redirect(url_for('home'))
         else:
             flash(f'Wrong OTP:', category='danger')
             return render_template('enterOTP.html')
@@ -218,95 +215,16 @@ def validateOTP():
 
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
     finalData = session.get('finalData')
     username = finalData['first_name'] + " " + finalData['last_name']
-
-    # static rooms are defined in the below array: need to replace the list to a dynamic one
-    # ROOMS = ['lounge', 'news', 'games', 'coding']
     ROOMS = []
-    finalData = session.get("finalData")
-    currentUser = finalData['first_name'] + " " + finalData['last_name']
-    list_of_rooms = get_rooms_for_user(currentUser)
+    list_of_rooms = get_rooms_for_user(username)
     for room in list_of_rooms:
         ROOMS.append(room['room_name'])
     return render_template('chat.html', username=username, rooms=ROOMS)
-
-
-# dummy login for the test user - remove this once all testing is done
-@app.route("/dummylogin", methods=['GET', 'POST'])
-def dummyLogin():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin1", methods=['GET', 'POST'])
-def dummyLogin1():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber1' """)
-    records= cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin2", methods=['GET', 'POST'])
-def dummyLogin2():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber2' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin3", methods=['GET', 'POST'])
-def dummyLogin3():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
 
 
 # dummy route to pass in the product owner name to the create room stuff
@@ -328,4 +246,68 @@ def create_room():
         return redirect(url_for("chat"))
     return render_template("create-room.html")
 
-    
+
+
+@app.route('/updatePhoneNumber', methods=['POST', 'GET'])
+def updatePhoneNumber():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    # fetching the phone number and validating it
+    form = PhoneNumberForm()
+    if form.validate_on_submit():
+        number = form.contact_no.data
+        # if the phone number of the user is same as earlier number, then flash a message to provide another number
+        if number == session['number']:
+            flash(f'This is your current number please enter a different one', category='danger')
+            return render_template('enter_phone_number.html', form=form)
+        session['number'] = number
+        val = getOTPApi(number)
+        if val:
+            return render_template("UpdatePhoneOTP.html")
+    if form.errors != {}:  # If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error in updating phone number: {err_msg}', category='danger')
+    return render_template('enter_phone_number.html', form=form)
+
+
+@app.route('/validateOTPForUpdate', methods=['POST', 'GET'])
+def validateOTPForUpdate():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    otp = request.form['otp']
+    phone_number = session.get('number')
+    phone_number = (phone_number[3:])
+    if 'response' in session:
+        s = session['response']
+        if s == otp:
+            cur.execute("""Update user set contact_no = ? where user_id = ? """, (phone_number, userid))
+            conn.commit()
+            return redirect(url_for('profile'))
+        else:
+            flash(f'Wrong OTP:', category='danger')
+            return render_template('UpdatePhoneOTP.html')
+
+
+@app.route("/dummylogin3", methods=['GET', 'POST'])
+def dummyLogin3():
+    query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+    data = ['test-rollnumber3', 'Test', 'User', 'test3@gmail.com', 919876543217, 12348, True]
+    cur.execute(query, data)
+    conn.commit()
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
+    records = cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
