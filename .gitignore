@@ -136,4 +136,6 @@ dmypy.json
 
 #uploaded images
 App/uploads/
+
+#DB
 buzzDatabase.db

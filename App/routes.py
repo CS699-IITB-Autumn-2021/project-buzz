@@ -27,7 +27,7 @@ seedDB()
 def home():
     userid = session.get('userId')
     print("userid", userid)
-    if (userid == None):
+    if userid == None:
         userid = ""
 
     return render_template('index.html', userid=userid)
@@ -259,3 +259,26 @@ def validateOTPForUpdate():
         else:
             flash(f'Wrong OTP:', category='danger')
             return render_template('UpdatePhoneOTP.html')
+
+
+@app.route("/dummylogin3", methods=['GET', 'POST'])
+def dummyLogin3():
+    query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+    data = ['test-rollnumber3', 'Test', 'User', 'test3@gmail.com', 919876543217, 12348, True]
+    cur.execute(query, data)
+    conn.commit()
+    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
+    records = cur.fetchall()
+    print(records[0])
+    finalData = {}
+    finalData['user_id'] = records[0][0]
+    finalData['first_name'] = records[0][1]
+    finalData['last_name'] = records[0][2]
+    finalData['email'] = records[0][3]
+    finalData['contact_no'] = records[0][4]
+    finalData['sex_id'] = records[0][5]
+    finalData['roll_no'] = records[0][6]
+    session['finalData'] = finalData
+    for rows in records:
+        print(rows)
+    return redirect(url_for('chat'))
