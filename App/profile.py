@@ -46,6 +46,7 @@ class updateEmailForm(FlaskForm):
 
     submit = SubmitField('Submit')
 
+
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     userid = session.get('userId')
@@ -82,7 +83,7 @@ def profile():
         session['finalData'] = finalData
         print("newwwwww sesssion",session)
         
-        
+
 
        
         

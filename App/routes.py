@@ -5,10 +5,10 @@ from App.otp import *
 from App.forms import PhoneNumberForm
 from App import conn, cur
 from App.chatDBOperations import *
-#my imports
+# my imports
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm 
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from wtforms.validators import DataRequired
 from wtforms.fields.html5 import EmailField
@@ -23,28 +23,23 @@ seedDB()
 # conn.close()
 
 
-
-
-
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    
     userid = session.get('userId')
-    print("userid",userid)
+    print("userid", userid)
     if (userid == None):
         userid = ""
-    
-    return render_template('index.html',userid=userid)
+
+    return render_template('index.html', userid=userid)
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    
     userid = session.get('userId')
     userid = ""
-    
+
     session.clear()
-    
+
     return redirect('/')
 
 
@@ -156,48 +151,26 @@ def validateOTP():
     if 'response' in session:
         s = session['response']
         if s == otp:
-            '''
-            # checking if user already exists
-            # change to appropriate redirection link later at present only flashing a message
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                if rows[0] == finalData['roll_number']:
-                    flash(f'User already exists:', category='danger')
-                    return render_template('enterOTP.html')
-            '''
             # inserting the user if he new to the website
-            # cur.execute("SELECT id,name FROM sex")
-            # records = cur.fetchall()
-            # print(records)
             sexData = {}
             sexData["female"] = 1
             sexData["male"] = 2
             sexData["other"] = 3
-            
+
             # sexData = {val:key for key,val in records}
             userSex = 1
-            print("dict",sexData)
-            print("heyyyyyyyyyyy",finalData["sex"])
-            if sexData[finalData["sex"]]:
+            print("dict", sexData)
+            print("heyyyyyyyyyyy", finalData["sex"])
+            if finalData["sex"]:
                 userSex = sexData[finalData["sex"]]
             userId = str(uuid.uuid4())
-            session["userId"]=userId
-            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
-            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid,sex_id) VALUES(?,?,?,?,?,?,?,?) """
-            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid,userSex]
+            session["userId"] = userId
+            print(finalData, phone_number, type(phone_number), int(phone_number[3:]))
+            query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
+            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]),
+                    int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
-            '''
-            cur.execute("SELECT * FROM user")
-            records = cur.fetchall()
-            for rows in records:
-                print(rows[0])
-            print(finalData)
-            flash(f'User Created Successfully:', category='success')
-            '''
-            # return render_template('enterOTP.html')
-            
             return redirect(url_for('home'))
         else:
             flash(f'Wrong OTP:', category='danger')
@@ -207,97 +180,15 @@ def validateOTP():
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
     userid = session.get('userId')
-    if(userid == None):
+    if (userid == None):
         return redirect('/')
     finalData = session.get('finalData')
     username = finalData['first_name'] + " " + finalData['last_name']
-
-    # static rooms are defined in the below array: need to replace the list to a dynamic one
-    # ROOMS = ['lounge', 'news', 'games', 'coding']
     ROOMS = []
-    finalData = session.get("finalData")
-    currentUser = finalData['first_name'] + " " + finalData['last_name']
-    list_of_rooms = get_rooms_for_user(currentUser)
+    list_of_rooms = get_rooms_for_user(username)
     for room in list_of_rooms:
         ROOMS.append(room['room_name'])
     return render_template('chat.html', username=username, rooms=ROOMS)
-
-
-# dummy login for the test user - remove this once all testing is done
-@app.route("/dummylogin", methods=['GET', 'POST'])
-def dummyLogin():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin1", methods=['GET', 'POST'])
-def dummyLogin1():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber1' """)
-    records= cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin2", methods=['GET', 'POST'])
-def dummyLogin2():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber2' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
-
-
-@app.route("/dummylogin3", methods=['GET', 'POST'])
-def dummyLogin3():
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
 
 
 # dummy route to pass in the product owner name to the create room stuff
@@ -319,4 +210,63 @@ def create_room():
         return redirect(url_for("chat"))
     return render_template("create-room.html")
 
-    
+
+# make the search bar input name as "query" in frontend
+# reuse the viewProducts.html to display the search results by adding search.html
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    query = request.form['query']
+    cur.execute("SELECT * FROM products")
+    records = cur.fetchall()
+    products = []
+    for rows in records:
+        title = rows[5]
+        description = rows[3]
+        if title.find(query) == -1 and description.find(query) == -1:
+            continue
+        else:
+            products.append(rows)
+    return render_template("search.html", products=products)
+    # return render_template("viewProducts.html", products=products)
+
+
+@app.route('/updatePhoneNumber', methods=['POST', 'GET'])
+def updatePhoneNumber():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    # fetching the phone number and validating it
+    form = PhoneNumberForm()
+    if form.validate_on_submit():
+        number = form.contact_no.data
+        # if the phone number of the user is same as earlier number, then flash a message to provide another number
+        if number == session['number']:
+            flash(f'This is your current number please enter a different one', category='danger')
+            return render_template('enter_phone_number.html', form=form)
+        session['number'] = number
+        val = getOTPApi(number)
+        if val:
+            return render_template("UpdatePhoneOTP.html")
+    if form.errors != {}:  # If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error in updating phone number: {err_msg}', category='danger')
+    return render_template('enter_phone_number.html', form=form)
+
+
+@app.route('/validateOTPForUpdate', methods=['POST', 'GET'])
+def validateOTPForUpdate():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    otp = request.form['otp']
+    phone_number = session.get('number')
+    phone_number = (phone_number[3:])
+    if 'response' in session:
+        s = session['response']
+        if s == otp:
+            cur.execute("""Update user set contact_no = ? where user_id = ? """, (phone_number, userid))
+            conn.commit()
+            return redirect(url_for('profile'))
+        else:
+            flash(f'Wrong OTP:', category='danger')
+            return render_template('UpdatePhoneOTP.html')
