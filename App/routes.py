@@ -10,7 +10,7 @@ from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 from wtforms.fields.html5 import EmailField, IntegerField
 from wtforms.validators import InputRequired, Email
 
@@ -55,6 +55,13 @@ class addBidForm(FlaskForm):
     bid = IntegerField("BID ",  [InputRequired("add your bid here")])
 
     submit = SubmitField('Submit')
+
+
+class userRatingForm(FlaskForm):
+    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
+    bid = IntegerField("User Rating ",  [InputRequired("Put user rating here"),NumberRange(min=0, max=10, message='Please insert value between 0 and 10')])
+    submit = SubmitField('Submit')
+
 @app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
 def detail(productId):
     #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
@@ -79,16 +86,18 @@ def detail(productId):
     sellingOption = details[0][10]
     seller = userdetails[0][1] + " "+ userdetails[0][2]
     print("sell option",sellingOption)
-
-
+    cur.execute("Select avg(rating) from rating  where user_id=\'%s\' "%(userId))
+    showRatingForm = cur.fetchall()
+    print(showRatingForm)
     # return ("your product id"+productId)
     form= addBidForm()
+    ratingForm = userRatingForm()
     if form.validate_on_submit():
         bid = form.bid.data
         print("your bid is ",bid)
 
     
-    return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form
+    return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
 )
 
 
