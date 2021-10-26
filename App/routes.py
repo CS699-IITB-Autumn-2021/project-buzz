@@ -15,96 +15,55 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Email
 
 from App.bingoClassifiedDbCode import seedDB
-
+import uuid
 
 seedDB()
-
-# import sqlite3
-
-# conn = sqlite3.connect('buzzDatabase.db')
-# cur = conn.cursor()
-# with open('SqlFile.sql') as f:
-#     conn.executescript(f.read())
-    
-
-
-# cur.execute("""INSERT INTO sex(name) VALUES("male") """)
-# cur.execute("""INSERT INTO sex(name) VALUES("female") """)
-# cur.execute("""INSERT INTO sex(name) VALUES("others") """)
-# cur.execute("SELECT * FROM sex")
-# records = cur.fetchall()
-
-# cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
-
-
-# record = cur.fetchall()
-# for data in record:
-#     print(data)
-
-# fname = record[0][0]
-# print(type(record))
-# lname = record[0][1]
-# name = fname+" "+lname
-# sex = record[0][2]
-# email = record[0][3]
-# contact = record[0][4]
-# print(name)
-# print(sex)
-# print(email)
-# print(contact)
-# cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
-# cur.execute("""Select * from products , user where products.user_id = user.user_id and products.id=1 """)
-# details = cur.fetchall()
-# description = details[0][3]
-# price = details[0][4]
-# title=details[0][5]
-# likes = details[0][7]
-# dislikes =details[0][8]
-# contact_no = details[0][20]
-# postedon = details[0][13]
-# seller = details[0][5]
-
-
-
-
-
-
 
 
 # conn.close()
 
 
 
-class NameForm(FlaskForm):
-    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
-    email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
 
-    submit = SubmitField('Submit')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    
+    userid = session.get('userId')
+    print("userid",userid)
+    if (userid == None):
+        userid = ""
+    
+    return render_template('index.html',userid=userid)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    
+    userid = session.get('userId')
+    userid = ""
+    
+    session.clear()
+    
+    return redirect('/')
+
+
+# @app.route('/header', methods=['GET', 'POST'])
+# def header():
+#     finalData = session.get('finalData')
+#     fname = finalData['first_name']
+#     return render_template('header.html',fname=fname)
+
 
 
 @app.route('/detail', methods=['GET', 'POST'])
 def detail():
+
     
 
     
     return render_template('detail.html',description =description,price =price,title=title,likes=likes,dislikes=dislikes ,contact_no=contact_no ,postedon=postedon ,seller=seller
 )
-
-@app.route('/profile', methods=['GET', 'POST'])
-def index():
-    form = NameForm()
-    if form.validate_on_submit():
-        newemail = form.newemail.data
-        print(newemail)
-
-    
-    return render_template('profile.html',name=name,sex=sex,email=email,contact=contact,form=form)
 
 
 @app.route('/sso')
@@ -181,17 +140,25 @@ def validateOTP():
         s = session['response']
         if s == otp:
             # inserting the user if he new to the website
-            cur.execute("SELECT id,name FROM sex")
-            records = cur.fetchall()
-            sexData = {val:key for key,val in records}
-            print(sexData)
-            print(records)
-            print(finalData, phone_number, type(phone_number), int(phone_number[3:]))
+            sexData = {}
+            sexData["female"] = 1
+            sexData["male"] = 2
+            sexData["other"] = 3
+            
+            # sexData = {val:key for key,val in records}
+            userSex = 1
+            print("dict",sexData)
+            print("heyyyyyyyyyyy",finalData["sex"])
+            if finalData["sex"]:
+                userSex = sexData[finalData["sex"]]
+            userId = str(uuid.uuid4())
+            session["userId"]=userId
+            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
             query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-            data = [finalData['roll_number'], finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid]
+            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
-            return "First time login user successfully added to database, phone number also verified, redirect user to post-login landing page straight away"
+            return redirect(url_for('home'))
         else:
             flash(f'Wrong OTP:', category='danger')
             return render_template('enterOTP.html')
@@ -199,6 +166,9 @@ def validateOTP():
 
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
+    userid = session.get('userId')
+    if(userid == None):
+        return redirect('/')
     finalData = session.get('finalData')
     username = finalData['first_name'] + " " + finalData['last_name']
     ROOMS = []

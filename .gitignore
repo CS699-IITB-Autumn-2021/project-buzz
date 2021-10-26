@@ -132,4 +132,4 @@ dmypy.json
 .idea/
 
 #uploaded images
-./App/uploads
+App/uploads/

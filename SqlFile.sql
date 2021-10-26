@@ -79,7 +79,7 @@ CREATE TABLE credentials (
 );
 
 CREATE TABLE products (
-	id integer  PRIMARY KEY AUTOINCREMENT,
+	id varchar  PRIMARY KEY ,
 	category_id integer default 1, 
 	user_id varchar, 
 	product_description text,
@@ -90,14 +90,14 @@ CREATE TABLE products (
 	dislikes integer DEFAULT 0,
 	spam integer DEFAULT 0 ,
 	selling_option integer,
-	bid_id integer,
+	bid_base integer,
 	bid_inc integer,
 	created_at timestamp default current_timestamp,
 	updated_at timestamp default current_timestamp,
 	deleted_at timestamp ,
 	FOREIGN KEY(id) REFERENCES USER(user_id) ,
 	FOREIGN KEY(category_id) REFERENCES CATEGORIES(id)
-	FOREIGN KEY(bid_id) REFERENCES BID(id)
+	FOREIGN KEY(bid_base) REFERENCES BID(id)
 	FOREIGN KEY(selling_option) REFERENCES selling_opt(id)
 );
 CREATE TABLE product_tags (
@@ -139,8 +139,8 @@ CREATE TABLE bid (
 );
 
 CREATE TABLE images (
-	id varchar PRIMARY KEY,
-	product_id integer ,
+	id integer PRIMARY KEY AUTOINCREMENT DEFAULT 0,
+	product_id varchar ,
 	image_url varchar,
 	created_at timestamp default current_timestamp,
 	updated_at timestamp default current_timestamp,

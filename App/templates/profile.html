@@ -1,205 +1,31 @@
-
 {% import "bootstrap/wtf.html" as wtf %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-        body {
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-            padding-top: 70px;
+<style>
+    body {
 
-        }
+        padding-top: 70px;
 
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    }
 
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
 
+{% include "header.html" %}
 
-    {% block content %}
-
-
-
-
-
-    <div class>
-        <div class="mx-auto">
-            <div class="nav mx-auto">
-                <div>
-
-                    <nav class="navbar fixed-top navbar-light bg-light">
-
-                        <div class="container-fluid">
-
-                            <a class="navbar-brand" href="#">Fixed top</a>
-
-                            <div>
-
-                                <i class="fas fa-comment-dots fs-3 py-1 v-bottom"></i> <span style="font-size: .55em;"
-                                    class="position-absolute fs-7 mt-2 start-9 0 translate-middle badge rounded-pill bg-danger">
-
-                                    9+
-
-                                </span>
-
-                                <div class="btn-group">
-
-                                    <button class=" btn dropdown-toggle" type="button" id="defaultDropdown"
-                                        data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-
-                                        Hi Deeksha!
-
-                                    </button>
-
-                                    <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
-
-                                        <li><a class="dropdown-item" href="#">Profile</a></li>
-
-                                        <li><a class="dropdown-item" href="#">My Ads</a></li>
-
-                                        <li><a class="dropdown-item" href="#">Logout</a></li>
-
-                                    </ul>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </nav>
-
-                </div>
-
-            </div>
-            <div class="row mx-auto p-0 m-0 p-5">
-                <div class="col-sm-2 bg-danger">
-
-                </div>
-
-                <div class="col-sm-8 mx-auto">
-                    <form class="border p-4 fs-4 mt-5">
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{name}}">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Sex</label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                    value={{sex}}>
-                            </div>
-                        </div>
-                        <div class="mb-3 row ">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-6 d-flex justify-content-start ">
-                                <div class="input-group">
-                                    
-                                    <input type="text" readonly class="form-control-plaintext form-control" id="staticEmail"
-                                    value={{email}} >
-                                    <div class="input-group-append">
-                                      <span class="input-group-text"><span  data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"><i class="fas fa-edit"></i></span>
-                                      
-                                    </div>
-                                  </div>
-                            
-                                <!-- Button trigger modal -->
-                                {%block modals%}
-                                <span  data-bs-toggle="modal"
-                                 
-                                
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update Email</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <label for="exampleInputEmail1"></label>
-                                                <!-- <input type="email" class="form-control" id="exampleInputEmail1"
-                                                    aria-describedby="emailHelp" placeholder="Enter email"> -->
-                                                    {{wtf.form_field(form.email,class="form-control")}}
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                                                {{wtf.form_field(form.submit,class="form-control")}}
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-
-                            </div>
-                        </div>
-                        <div class="mb-3 row ">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Contact</label>
-                            <div class="col-sm-6 ">
-                               
-                                    <div class="input-group">
-                                    
-                                        <input type="text" readonly class="form-control-plaintext form-control" id="staticEmail"
-                                        value={{contact}} >
-                                        <div class="input-group-append">
-                                          <span class="input-group-text"><span  data-bs-toggle="modal"
-                                            data-bs-target="#contactmodel"><i class="fas fa-edit"></i></span>
-                                          
-                                        </div>
-                                      </div>
-                        
-                                <!-- Button trigger modal -->
-                                
-                                    
-                            </span>
-
-                                <!-- Modal -->
-                                
-                                <div class="modal fade" id="contactmodel" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update Contact No</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <label for="exampleInputEmail1" class="form-label">Contact :</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                                    aria-describedby="emailHelp" placeholder="Enter contact">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {%endblock%}
-
-                            </div>
-                        </div>
-
-
-                    </form>
+{% block content %}
 
 
 
@@ -211,53 +37,132 @@
 
 
 
-                </div>
 
-            </div>
-        </div>
+
+<div class="row mx-auto p-0 m-0 p-5">
+    <div class="col-sm-2 bg-danger">
 
     </div>
-    <footer>
-        <div style="
-  background-color: rgb(11, 11, 61);
-  height: 300px;
-">
 
-            <div class="row d-flex justify-content-evenly m-0 p-4">
-                <div class="col-sm-6">
-                    <div class="fs-5 text-light px-4">About Us</div>
-                    <div class="text-muted text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-                        error nulla odit repellat itaque distinctio iure veritatis repellendus? Itaque consequuntur
-                        eaque, reiciendis odit accusantium officia ipsam dolores velit quasi recusandae.
-                    </div>
-
-
+    <div class="col-sm-8 mx-auto">
+        <form class="border p-4 fs-4 mt-5">
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{name}}">
                 </div>
-                <div class="col-sm-4">
-                    <div class="fs-6 text-light">Happy Customers </div>
-                    <div class="fs-6 text-light ">Products Sold</div>
-
-
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Sex</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{sex}}>
                 </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={{email}}>
+                </div>
+            </div>
+            <div class="mb-3 row ">
+
+
+
+                <!-- Button trigger modal -->
+                {%block modals%}
+
+
+
+
 
 
             </div>
 
-        </div>
-    </footer>
+            <div class="mb-3 row ">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Contact</label>
+                <div class="col-sm-6 ">
 
-    <!-- Optional JavaScript; choose one of the two! -->
+                    <div class="input-group">
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+                        <input type="text" readonly class="form-control-plaintext form-control" id="staticEmail"
+                            value={{contact}}>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><span data-bs-toggle="modal"
+                                    data-bs-target="#contactmodel"><i class="fas fa-edit"></i></span>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+                        </div>
+                    </div>
+
+                    <!-- Button trigger modal -->
+
+
+                    </span>
+
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="contactmodel" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Update Contact No</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="exampleInputEmail1" class="form-label">Contact :</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter contact">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endblock%}
+
+                </div>
+            </div>
+    </div>
+
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+</div>
+
+</div>
+{% include "footer.html" %}
+
+
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
-    
 
 
-    {% endblock %}
+
+{% endblock %}

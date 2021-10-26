@@ -17,8 +17,25 @@ def fetchEnumTable(tableName,columns ):
 @app.route('/viewProducts')
 def viewProducts():
 	categoty = fetchEnumTable("categories","*")
-	data = fetchEnumTable("products","title,bid_inc,product_availability,updated_at")	
-	return render_template('viewProducts.html',products=data)
+	data = fetchEnumTable("products","title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option")	
+	print(data)
+	finalData =[]
+	for element in data:
+		print("I am element ",element)
+		pics=[]
+		q = "images where product_id=\'%s\'"%(element[4])
+		pics = fetchEnumTable(q,"image_url")[0][0]	
+		maxBid = fetchEnumTable("bid where product_id=\'%s\'"%(element[4]),"max(bid_price)")
+		print("======\t",pics,maxBid)
+		if maxBid[0][0] is None:
+			maxBid="None"
+		else:
+			maxBid=maxBid[0][0]
+		print(maxBid,"this is max bid")
+		temp = list(element)
+		temp.append(pics)
+		temp.append(maxBid)
+		finalData.append(tuple(temp))
+	print(finalData)
 
-if __name__ == '__main__':
-	app.run(debug=True)
+	return render_template('viewProducts.html',products=finalData)
