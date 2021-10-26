@@ -59,8 +59,6 @@ def addProducts():
 	# you must tell the variable 'form' what you named the class, above
 	# 'form' is the variable name used in this template: index.html
 	userId = session.get("userId")
-	userId = str(uuid.uuid4())
-	session["userId"]=userId
 	form = productForm()
 	message=""
 	tag_list = list(fetchEnumTable("tags","name"))
