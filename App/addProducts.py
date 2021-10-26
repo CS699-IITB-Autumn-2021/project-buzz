@@ -99,5 +99,6 @@ def addProducts():
 			query = """insert into images(product_id,image_url) values(\'%s\',\'%s\')"""%(newProductId,photo)
 			insertData(query)
 		message = title+" Added in ."+category+" with "+description+" "+str(quantity)+" "+type+" "+tags
+		return redirect('myAds')
 	return render_template('addProduct.html', form=form, message=message ,tag_list=finalTaglist)
 
