@@ -14,9 +14,18 @@
 
 <style>
   .coverimage {
-    background:"{{url_for('static', filename='image/front.jpg')}}";
+    background:url("{{url_for('static', filename='images/bg.jpg')}}");
+    height: 100vh;
+    background-size:cover ;
+    background-repeat: no-repeat;
   }
-
+  body{
+    padding: 0 !important;
+  }
+  .bg-light{
+    background: #94a6bb !important;
+    padding-bottom: 15px;
+  }
   .category-cards {
     /* display: contents; */
   }
@@ -62,14 +71,10 @@
 
 {% block content %}
 
-<div class="coverimage" style="
-      
-      /* background-color: rgb(161, 201, 218); */
-      height: 450px;
-    ">
+<div class="coverimage" >
   <div align="right" style="padding-right:30px;" class="mx-auto ">
     {%if userid == "" %}
-    <button type="button" class="btn btn-outline-info btn-lg" style="margin-top:20px" onclick="location.href='sso'">LOGIN</button>
+    <button type="button" class="btn btn-outline-dark btn-lg" style="margin-top:20px" onclick="location.href='sso'">LOGIN</button>
     {% else %}
     {% include "header.html" %}
     {% endif %}
@@ -229,7 +234,7 @@
   <div class="row m-0">
     <div class="col-sm-4">
       <div>
-        <img src="{{url_for('static', filename='images/sell.jpg')}}" alt="laptop" style="margin-top: 10%;height: 300px;"
+        <img src="{{url_for('static', filename='images/sell.png')}}" alt="laptop" style="margin-top: 10%;height: 300px; padding-left: 45px;"
           class="rounded float-right hvr-grow">
       </div>
 
