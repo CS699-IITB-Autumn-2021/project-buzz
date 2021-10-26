@@ -28,7 +28,24 @@ seedDB()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    
+    userid = session.get('userId')
+    print("userid",userid)
+    if (userid == None):
+        userid = ""
+    
+    return render_template('index.html',userid=userid)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    
+    userid = session.get('userId')
+    userid = ""
+    
+    session.clear()
+    
+    return redirect('/')
+
 @app.route('/index2', methods=['GET', 'POST'])
 def home2():
     return render_template('index2.html')
@@ -42,6 +59,7 @@ def home2():
 
 @app.route('/detail', methods=['GET', 'POST'])
 def detail():
+    
     
 
     
@@ -133,10 +151,15 @@ def validateOTP():
                     return render_template('enterOTP.html')
             '''
             # inserting the user if he new to the website
-            cur.execute("SELECT id,name FROM sex")
-            records = cur.fetchall()
-            print(records)
-            sexData = {val:key for key,val in records}
+            # cur.execute("SELECT id,name FROM sex")
+            # records = cur.fetchall()
+            # print(records)
+            sexData = {}
+            sexData["female"] = 1
+            sexData["male"] = 2
+            sexData["other"] = 3
+            
+            # sexData = {val:key for key,val in records}
             userSex = 1
             print("dict",sexData)
             print("heyyyyyyyyyyy",finalData["sex"])
@@ -158,7 +181,8 @@ def validateOTP():
             flash(f'User Created Successfully:', category='success')
             '''
             # return render_template('enterOTP.html')
-            return redirect(url_for('index2'))
+            
+            return redirect(url_for('home'))
         else:
             flash(f'Wrong OTP:', category='danger')
             return render_template('enterOTP.html')
