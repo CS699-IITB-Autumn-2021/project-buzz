@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for,request
+from flask import Flask, render_template, redirect, url_for,request,session
 import uuid
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -58,6 +58,9 @@ def addProducts():
 	# names = get_names(ACTORS)
 	# you must tell the variable 'form' what you named the class, above
 	# 'form' is the variable name used in this template: index.html
+	userId = session.get("userId")
+	userId = str(uuid.uuid4())
+	session["userId"]=userId
 	form = productForm()
 	message=""
 	tag_list = list(fetchEnumTable("tags","name"))
@@ -83,8 +86,8 @@ def addProducts():
 		bidPrice = form.bidPrice.data
 		bidIncrement = form.bidIncrement.data
 		newProductId = str(uuid.uuid4())
-		query = """insert into products(id,category_id,user_id,product_description,title,product_availability,selling_option,price,bid_base,bid_inc) values(\'%s\',%d,1,\'%s\',\'%s\',%d,%d,%d,%d,%d)""" %(newProductId,int(category) ,description, title, int(quantity),int(type),int(price),int(bidPrice),int(bidIncrement))
-		insertData(query)
+		query = """insert into products(id,category_id,user_id,product_description,title,product_availability,selling_option,price,bid_base,bid_inc) values(\'%s\',%d,\'%s\',\'%s\',\'%s\',%d,%d,%d,%d,%d)""" %(newProductId,int(category),userId,description, title, int(quantity),int(type),int(price),int(bidPrice),int(bidIncrement))
+		print(insertData(query))
 		for photo in finalPhotos:
 			query = """insert into images(product_id,image_url) values(\'%s\',\'%s\')"""%(newProductId,photo)
 			insertData(query)
