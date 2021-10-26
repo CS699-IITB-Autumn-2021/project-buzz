@@ -94,10 +94,10 @@
                         <div class="card-footer">
                             <div class="row m-0">
                                 <div class="col-6 tex   text-center">
-                                    <i class="far fa-thumbs-up px-2"></i>{{likes}}
+                                    <i class="far fa-thumbs-up px-2"></i>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <i class="far fa-thumbs-down px-2"></i>{{dislikes}}
+                                    <i class="far fa-thumbs-down px-2"></i>
                                 </div>
                             </div>
                         </div>
@@ -138,8 +138,13 @@
                     </div>
                     <div class="card p-0 pt-2 mt-2">
                         <div class="card-body">
-                            <button type="button" class="btn btn-success"><i class="fas fa-comments">
-                                    Contact</i></button>
+                           <form action="/create-room" method="post">
+                                <input readonly class="form-control-plaintext form-control" name="owner" value="{{seller}}"></input>
+                               <button type="submit" class="btn btn-success"><i class="fas fa-comments">
+                                   chat with Owner</i>
+                                   
+                                </button>
+                            </form>
                         </div>
                         <div class="mx-auto text-info"><i class="fas fa-mobile-alt"></i> {{contact_no}}</div>
                     </div>
