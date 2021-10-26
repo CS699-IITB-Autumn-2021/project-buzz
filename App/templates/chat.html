@@ -7,29 +7,20 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/chat_style.css') }}">
 </head>
 <body>
-<button class="toggle-button" type="button" onclick="openNav()">
-      <i class="fa fa-bars"></i>
-      <span class="hover-toggle-button cursor-pointer"> Chat Rooms </span>
+
+    <!--Room Selection: Side nav bar to display the available rooms of a user-->
+    <button class="toggle-button" type="button" onclick="openNav()">
+        <i class="fa fa-bars"></i>
+        <span class="hover-toggle-button cursor-pointer"> Chat Rooms </span>
     </button>
     <div id="sidebar" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <h3>Chat Rooms</h3>
         {% for room in rooms %}
             <p id="{{ room }}" class="select-room cursor-pointer">{{ room }}</p>
         {% endfor %}
     </div>
-
-<div id="chat-room"  class="container">
-    <!--Room Selection: Side nav bar to display the available rooms of a user-->
-    <!--
-    <div id="sidebar" class="col-sm-3">
-        <h3>Chat Rooms</h3>
-        {% for room in rooms %}
-            <p id="{{ room }}" class="select-room cursor-pointer">{{ room }}</p>
-        {% endfor %}
-    </div>
-    -->
-    <!--room selection side-bar ends-->
+    <!--room selection side nav ends-->
 
 
     <!--Main Chat area of the page-->
@@ -51,9 +42,6 @@
 
     </div>
     <!--chat area ends-->
-
-</div>
-
 
 
     <!--Get Username-->

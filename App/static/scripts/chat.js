@@ -1,13 +1,14 @@
+// functions for toggling the side nav bar
 function openNav() {
     document.getElementById("sidebar").style.width = "250px";
-    // document.getElementById("chat-area").style.marginLeft = "150px";
 }
 
 function closeNav() {
     document.getElementById("sidebar").style.width = "0";
-    // document.getElementById("chat-area").style.marginLeft = "0";
 }
 
+
+// adding "press-enter" listener to "send" button in chat for better UX
 document.addEventListener('DOMContentLoaded', () => {
     let msg = document.querySelector('#user-text')
     msg.addEventListener('keyup', event => {
