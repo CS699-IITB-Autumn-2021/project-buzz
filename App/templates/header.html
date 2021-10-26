@@ -7,8 +7,19 @@ body {
     <nav class="navbar fixed-top navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand  ps-5" href="/"><img style="width: 33px;height: auto;" src="{{url_for('static', filename='./images/logo.png')}}"></img></a>
-            <div>
-                 <button type="button" class="btn btn-outline-info btn-sm" onclick="location.href='chat'"><i class="fas fa-comment-dots fs-3 py-1 v-bottom"></i></button>
+            <div class="d-flex">
+                <div>
+
+                    <form class="d-flex m-auto" method="get" action="/search">
+                        <input class="form-control me-2"  name="query" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+                <a href="/addProduct">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="location.href='chat'"><i class="fas fa-plus-circle fs-5 py-1 v-bottom"></i></button>
+                </a>
+
+                 <button type="button" class="btn btn-outline btn-sm" onclick="location.href='chat'"><i class="fas fa-comment-dots fs-5 py-1 v-bottom"></i></button>
 
                 <div class="btn-group">
                     <button class=" btn dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">

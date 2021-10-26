@@ -133,10 +133,6 @@ def ssoVerification():
     return redirect(url_for('getOTP'))
 
 
-@app.route('/temp', methods=['POST', 'GET'])
-def temp():
-        return render_template("enter_phone_number.html")
-
 @app.route('/getOTP', methods=['POST', 'GET'])
 def getOTP():
     # fetching the phone number and validating it
@@ -221,24 +217,6 @@ def create_room():
         return redirect(url_for("chat"))
     return render_template("create-room.html")
 
-
-# make the search bar input name as "query" in frontend
-# reuse the viewProducts.html to display the search results by adding search.html
-@app.route("/search", methods=['GET', 'POST'])
-def search():
-    query = request.form['query']
-    cur.execute("SELECT * FROM products")
-    records = cur.fetchall()
-    products = []
-    for rows in records:
-        title = rows[5]
-        description = rows[3]
-        if title.find(query) == -1 and description.find(query) == -1:
-            continue
-        else:
-            products.append(rows)
-    return render_template("search.html", products=products)
-    # return render_template("viewProducts.html", products=products)
 
 
 @app.route('/updatePhoneNumber', methods=['POST', 'GET'])
