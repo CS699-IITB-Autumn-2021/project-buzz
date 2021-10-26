@@ -59,7 +59,7 @@ class addBidForm(FlaskForm):
 
 class userRatingForm(FlaskForm):
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
-    bid = IntegerField("User Rating ",  [InputRequired("Put user rating here"),NumberRange(min=0, max=10, message='Please insert value between 0 and 10')])
+    rating = IntegerField("User Rating ",  [InputRequired("Put user rating here"),NumberRange(min=0, max=10, message='Please insert value between 0 and 10')])
     submit = SubmitField('Submit')
 
 @app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
@@ -87,11 +87,19 @@ def detail(productId):
     seller = userdetails[0][1] + " "+ userdetails[0][2]
     print("sell option",sellingOption)
     cur.execute("Select avg(rating) from rating  where user_id=\'%s\' "%(userId))
-    showRatingForm = cur.fetchall()
-    print(showRatingForm)
+    showRatingValue = cur.fetchall()[0][0]
+    print(showRatingValue)
     # return ("your product id"+productId)
     form= addBidForm()
     ratingForm = userRatingForm()
+    if ratingForm.validate_on_submit():
+        rating = ratingForm.rating.data
+        print("your bid is ",rating)
+        userid=session.get('userId')
+        cur.execute("Insert into rating(user_id,rating) values(\'%s\',%d) "%(userId,rating))
+        cur.execute("select * from rating")
+        record = cur.fetchall()
+        print("here is our rating entry",record)
     if form.validate_on_submit():
         bid = form.bid.data
         print("your bid is ",bid)
@@ -102,7 +110,7 @@ def detail(productId):
         print("here is our bid entry",record)
 
     
-    return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
+    return render_template('detail.html',showRatingValue=showRatingValue ,images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
 )
 
 
