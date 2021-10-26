@@ -6,13 +6,13 @@ body {
 <div>
     <nav class="navbar fixed-top navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Fixed top</a>
+            <a class="navbar-brand  ps-5" href="/"><img style="width: 33px;height: auto;" src="{{url_for('static', filename='./images/logo.png')}}"></img></a>
             <div>
                  <button type="button" class="btn btn-outline-info btn-sm" onclick="location.href='chat'"><i class="fas fa-comment-dots fs-3 py-1 v-bottom"></i></button>
 
                 <div class="btn-group">
                     <button class=" btn dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                       Hi User!
+                       Hi {{session["finalData"]["first_name"]}}!
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
                         <li><a class="dropdown-item" href="profile">Profile</a></li>

@@ -126,6 +126,10 @@ def ssoVerification():
     return redirect(url_for('getOTP'))
 
 
+@app.route('/temp', methods=['POST', 'GET'])
+def temp():
+        return render_template("enter_phone_number.html")
+
 @app.route('/getOTP', methods=['POST', 'GET'])
 def getOTP():
     # fetching the phone number and validating it
