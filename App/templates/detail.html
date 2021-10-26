@@ -118,6 +118,7 @@
 
         </div>
         <div class="col-2">
+            {% if sellingOption == '2' %}
             <div class="card mt-2">
                 <div class="card-body bid  ">
                     <div class="bid2 ">
@@ -137,10 +138,11 @@
                         {{ wtf.quick_form(form) }}
 
 
-                        
+
                     </div>
                 </div>
             </div>
+            {% endif %}
 
 
 

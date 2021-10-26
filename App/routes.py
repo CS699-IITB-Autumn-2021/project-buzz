@@ -76,6 +76,10 @@ def detail(productId):
     seller = userdetails[0][1] + " "+ userdetails[0][2]
     cur.execute("Select image_url from images  where product_id=\'%s\' "%(id))
     images = cur.fetchall()
+    sellingOption = details[0][10]
+    seller = userdetails[0][1] + " "+ userdetails[0][2]
+    print("sell option",sellingOption)
+
 
     # return ("your product id"+productId)
     form= addBidForm()
@@ -84,7 +88,7 @@ def detail(productId):
         print("your bid is ",bid)
 
     
-    return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,postedon=postedon ,seller=seller,form=form
+    return render_template('detail.html',images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form
 )
 
 
