@@ -5,10 +5,10 @@ from App.otp import *
 from App.forms import PhoneNumberForm
 from App import conn, cur
 from App.chatDBOperations import *
-#my imports
+# my imports
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm 
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from wtforms.validators import DataRequired
 from wtforms.fields.html5 import EmailField
@@ -23,28 +23,23 @@ seedDB()
 # conn.close()
 
 
-
-
-
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    
     userid = session.get('userId')
-    print("userid",userid)
+    print("userid", userid)
     if (userid == None):
         userid = ""
-    
-    return render_template('index.html',userid=userid)
+
+    return render_template('index.html', userid=userid)
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    
     userid = session.get('userId')
     userid = ""
-    
+
     session.clear()
-    
+
     return redirect('/')
 
 
@@ -55,15 +50,11 @@ def logout():
 #     return render_template('header.html',fname=fname)
 
 
-
 @app.route('/detail', methods=['GET', 'POST'])
 def detail():
-
-    
-
-    
-    return render_template('detail.html',description =description,price =price,title=title,likes=likes,dislikes=dislikes ,contact_no=contact_no ,postedon=postedon ,seller=seller
-)
+    return render_template('detail.html', description=description, price=price, title=title, likes=likes,
+                           dislikes=dislikes, contact_no=contact_no, postedon=postedon, seller=seller
+                           )
 
 
 @app.route('/sso')
@@ -144,18 +135,19 @@ def validateOTP():
             sexData["female"] = 1
             sexData["male"] = 2
             sexData["other"] = 3
-            
+
             # sexData = {val:key for key,val in records}
             userSex = 1
-            print("dict",sexData)
-            print("heyyyyyyyyyyy",finalData["sex"])
+            print("dict", sexData)
+            print("heyyyyyyyyyyy", finalData["sex"])
             if finalData["sex"]:
                 userSex = sexData[finalData["sex"]]
             userId = str(uuid.uuid4())
-            session["userId"]=userId
-            print(finalData,phone_number,type(phone_number),int(phone_number[3:]))
+            session["userId"] = userId
+            print(finalData, phone_number, type(phone_number), int(phone_number[3:]))
             query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]), int(finalData['roll_number']), valid]
+            data = [userId, finalData['first_name'], finalData['last_name'], finalData['email'], (phone_number[3:]),
+                    int(finalData['roll_number']), valid]
             cur.execute(query, data)
             conn.commit()
             return redirect(url_for('home'))
@@ -167,7 +159,7 @@ def validateOTP():
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
     userid = session.get('userId')
-    if(userid == None):
+    if (userid == None):
         return redirect('/')
     finalData = session.get('finalData')
     username = finalData['first_name'] + " " + finalData['last_name']
@@ -216,3 +208,44 @@ def search():
     return render_template("search.html", products=products)
     # return render_template("viewProducts.html", products=products)
 
+
+@app.route('/updatePhoneNumber', methods=['POST', 'GET'])
+def updatePhoneNumber():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    # fetching the phone number and validating it
+    form = PhoneNumberForm()
+    if form.validate_on_submit():
+        number = form.contact_no.data
+        # if the phone number of the user is same as earlier number, then flash a message to provide another number
+        if number == session['number']:
+            flash(f'This is your current number please enter a different one', category='danger')
+            return render_template('enter_phone_number.html', form=form)
+        session['number'] = number
+        val = getOTPApi(number)
+        if val:
+            return render_template("UpdatePhoneOTP.html")
+    if form.errors != {}:  # If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error in updating phone number: {err_msg}', category='danger')
+    return render_template('enter_phone_number.html', form=form)
+
+
+@app.route('/validateOTPForUpdate', methods=['POST', 'GET'])
+def validateOTPForUpdate():
+    userid = session.get('userId')
+    if (userid == None):
+        return redirect('/')
+    otp = request.form['otp']
+    phone_number = session.get('number')
+    phone_number = (phone_number[3:])
+    if 'response' in session:
+        s = session['response']
+        if s == otp:
+            cur.execute("""Update user set contact_no = ? where user_id = ? """, (phone_number, userid))
+            conn.commit()
+            return redirect(url_for('profile'))
+        else:
+            flash(f'Wrong OTP:', category='danger')
+            return render_template('UpdatePhoneOTP.html')
