@@ -15,6 +15,7 @@
     </button>
     <div id="sidebar" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <button type="button" id="home-button" class="btn btn-outline btn-md home-button" onclick="location.href='/'"><i class="fa fa-home"></i> Home</button>
         <h3>Chat Rooms</h3>
         {% for room in rooms %}
             <p id="{{ room }}" class="select-room cursor-pointer">{{ room }}</p>
