@@ -64,6 +64,11 @@ body {
     color : black;
 }
 
+#sidebar #home-button {
+    padding-left: 1em;
+    margin-left: 1em;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

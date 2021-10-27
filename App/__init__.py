@@ -28,7 +28,6 @@ chatDB = client.get_database("ChatDB")
 
 
 from App import chatDBOperations
-from App import bingoClassifiedDbCode
 from App import routes
 from App import viewProducts
 from App import myAds

@@ -108,7 +108,7 @@ def detail(productId):
         cur.execute("select * from bid")
         record = cur.fetchall()
         print("here is our bid entry",record)
-
+        conn.commit()
     
     return render_template('detail.html',showRatingValue=showRatingValue ,images=images,description =description,price =price,title=title,contact_no=contact_no ,sellingOption=sellingOption,postedon=postedon ,seller=seller,form=form,userRating= ratingForm
 )
