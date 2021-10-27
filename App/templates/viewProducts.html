@@ -110,10 +110,21 @@
             </nav>
         </div>
 
+        {% if product|count ==0%}
+            <div class="col-10 d-flex" style="min-height: 50vh;">
+            
+            <div class="row m-auto row-cols-1 row-cols-md-3 g-4 p-3 px-5">
+                
+                <div class="w-100 m-auto d-flex justify-content-center">
+                    <h1 class="text-muted">No Products found</h1>
+                </div>
+            </div>
+        </div>
+        
+        {%endif%}
         <div class="col-10 ">
-
-
             <div class="row row-cols-1 row-cols-md-3 g-4 p-3 px-5">
+
                 {%for product in products%}
 
                 {% if product[7]==1 %}
@@ -294,7 +305,7 @@
                 {% endif %}
                 {%endfor%}
             </div>
-
+            
         </div>
     </div>
 
