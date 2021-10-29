@@ -25,6 +25,11 @@ seedDB()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    """
+    [Function to redirect to index page of webapp]
+
+    
+    """
     userid = session.get('userId')
     print("userid", userid)
     if userid == None:
@@ -35,6 +40,11 @@ def home():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    """
+    [Function to clear session and redirect to index page]
+
+    
+    """
     userid = session.get('userId')
     userid = ""
 
@@ -51,6 +61,12 @@ def logout():
 
 
 class addBidForm(FlaskForm):
+    """
+    [Function to take input bid from user]
+
+    :param FlaskForm: [Takes integerfield bid as input]
+    
+    """
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
     bid = IntegerField("BID ",  [InputRequired("add your bid here")])
 
@@ -58,13 +74,26 @@ class addBidForm(FlaskForm):
 
 
 class userRatingForm(FlaskForm):
+    """
+    [Function to take input user rating from user]
+
+    :param FlaskForm: [takes integerfield rating as input]
+    
+    """
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
     rating = IntegerField("User Rating ",  [InputRequired("Put user rating here"),NumberRange(min=0, max=10, message='Please insert value between 0 and 10')])
     submit = SubmitField('Submit')
 
 @app.route('/viewProducts/detail/<productId>', methods=['GET', 'POST'])
 def detail(productId):
+    
     #cur.execute("""Insert into products values(NULL,2,"1","A good book in good condition",500,"BOOK",2,100,4,0,1,1,20,NULL,NULL,NULL) """)
+    
+    """
+    [This function extract all the data for detail page and renders it.]
+
+    
+    """
     id = productId
     print("id id id is here",id)
     cur.execute("Select * from products  where id=\'%s\' "%(id))

@@ -41,6 +41,12 @@ with open('SqlFile.sql') as f:
 
 
 class updateEmailForm(FlaskForm):
+    """
+    [This function ]
+
+    :param FlaskForm: [description]
+    :type FlaskForm: [type]
+    """
     # email = StringField('Email ID ', [validators.Email(message="invalid email")])
     email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
 
@@ -49,6 +55,12 @@ class updateEmailForm(FlaskForm):
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
+    """
+    [This function is used to extract user data for profile page.If no user is logged in it will redirect to login page/home page]
+
+    :param FlaskForm: [description]
+    :type FlaskForm: [type]
+    """
     userid = session.get('userId')
     if(userid == None):
         return redirect('/')

@@ -20,17 +20,21 @@ def fetchEnumTable(tableName,columns ):
 
 @app.route('/myAds')
 def myAds():
-    userid = session.get('userId')
-    if(userid == None):
-        return redirect('/')
-    
-    print("I am session:",session)
-    userId = session.get("userId")
-    data = fetchEnumTable("products where user_id=\'%s\' and deleted_at is NULL"%(userId),"title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option,user_id")	
-    print(data)
-    finalData =[]
-    for element in data:
-        pics=[]
+	"""
+	[If user is not logged in it will redirect user to home page else it will render myAds page where user can see all his/her ads.]
+
+	
+	"""
+	userid = session.get('userId')
+	if(userid == None):
+		return redirect('/')
+	print("I am session:",session)
+	userId = session.get("userId")
+	data = fetchEnumTable("products where user_id=\'%s\' and deleted_at is NULL"%(userId),"title,price,product_availability,updated_at,id,bid_base,bid_inc,selling_option,user_id")	
+	print(data)
+	finalData =[]
+	for element in data:
+		pics=[]
         q = "images where product_id=\'%s\' "%(element[4])
         pics = fetchEnumTable(q,"image_url")[0][0]	
         maxBid = fetchEnumTable("bid where product_id=\'%s\'"%(element[4]),"max(bid_price)")
@@ -43,13 +47,18 @@ def myAds():
         temp.append(pics)
         temp.append(maxBid)
         finalData.append(tuple(temp))
-    print(finalData)
-
-    return render_template('myAds.html',products=finalData)
+	print(finalData)
+	return render_template('myAds.html',products=finalData)
 
 
 @app.route('/myAds/delete/<productId>')
 def deleteMyAds(productId):
+	"""
+	[This function will delete ads with productid and will redirect to myAds page]
+
+	
+	"""
+	
 	userId = session.get("userId")
 	q = """update products set deleted_at=\'%s\' where user_id=\'%s\' and id=\'%s\'"""%(datetime.now(),userId,productId)
 	print(q)
@@ -79,6 +88,12 @@ def deleteMyAds(productId):
 
 @app.route('/myAds/sold/<productId>')
 def sold(productId):
+	"""
+	[This function will mark ads with productid as sold and will redirect to myAds page]
+
+	
+	"""
+	
 	userId = session.get("userId")
 	q = """update products set product_availability=\'%d\' where user_id=\'%s\' and id=\'%s\'"""%(0,userId,productId)
 	print(q)
