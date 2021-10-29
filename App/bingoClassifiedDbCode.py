@@ -1,10 +1,14 @@
 import sqlite3
 def seedDB():
+	"""
+	[This function will seed values into sex,categories,selling_opt and tags table.]
+	"""
+	
 	conn = sqlite3.connect('buzzDatabase.db')
 	cur = conn.cursor()
 	with open('SqlFile.sql') as f:
 		conn.executescript(f.read())
-
+    #Seed sex table :
 	cur.execute("""INSERT INTO sex(name) VALUES("male") """)
 	cur.execute("""INSERT INTO sex(name) VALUES("female") """)
 	cur.execute("""INSERT INTO sex(name) VALUES("others") """)
@@ -12,7 +16,7 @@ def seedDB():
 	records = cur.fetchall()
 	for rows in records:
 		print(rows)
-
+    #seed selling_opt table
 	cur.execute("""INSERT INTO selling_opt(name) VALUES("fixed_price") """)
 	cur.execute("""INSERT INTO selling_opt(name) VALUES("Auction") """)
 	cur.execute("""INSERT INTO selling_opt(name) VALUES("Donate") """)
@@ -22,7 +26,7 @@ def seedDB():
 	# 	print(rows)
 
 
-
+    #seed categories into categories table
 	cur.execute("""INSERT INTO categories(name) VALUES("Essentials") """)
 	cur.execute("""INSERT INTO categories(name) VALUES("Electronics") """)
 	cur.execute("""INSERT INTO categories(name) VALUES("Sports") """)
@@ -31,11 +35,12 @@ def seedDB():
 	cur.execute("""INSERT INTO categories(name) VALUES("Books") """)
 	cur.execute("""INSERT INTO categories(name) VALUES("Bags") """)
 
-	cur.execute("SELECT * FROM categories")
-	records = cur.fetchall()
+	# cur.execute("SELECT * FROM categories")
+	# records = cur.fetchall()
 	# for rows in records:
 	# 	print(rows)
-
+    
+	#seed tags table
 	cur.execute("""INSERT INTO tags(name) VALUES("Bucket") """)
 	cur.execute("""INSERT INTO tags(name) VALUES("Mug") """)
 	cur.execute("""INSERT INTO tags(name) VALUES("Mugs") """)

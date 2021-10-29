@@ -4,13 +4,25 @@ from App import config
 
 
 def createRegisterURL():
-    '''Create a URL to authorize used'''
+    
+    """
+    [Create a URL to authorize used]
+
+    :return: [url]
+    
+    """
     return config["SSO_URL"] + "?" + "client_id=" + config["CLIENT_ID"] + "&response_type=code&scope=" + config[
         "scope"] + "&redirect_uri=" + config["REDIRECT_URI"]
 
 
 def fetchCredentials(code):
-    '''fetch access token and refesh token'''
+    
+    """
+    [fetch access token and refesh token]
+
+    :return: [acess token and refresh token]
+    :rtype: [dictionary]
+    """
 
     header = {
         "Authorization": config["CREDENTIALS_TOKEN"]
@@ -55,7 +67,17 @@ def accessTokenRefresh(refreshToken):
 
 
 def getData(accessToken, params):
-    '''fetch the data required to register user like - first name,last name,sex etc'''
+    """
+    [fetch the data required to register user like - first name,last name,sex etc]
+
+    :param accessToken:
+    
+    :param params: 
+    
+    :return: [response]
+    
+    """
+    
     header = {
         "Authorization": "Bearer " + accessToken
     }

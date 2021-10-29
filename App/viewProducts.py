@@ -10,6 +10,15 @@ from datetime import datetime,timedelta
 
 
 def fetchEnumTable(tableName,columns ):
+	
+	"""
+	[This function extract data from database based on the tablename and columns given.]
+
+    :parameter tablename , columns
+	:return: [data/output of sqlite query]
+	
+	
+	"""
 	conn = sqlite3.connect('buzzDatabase.db',detect_types=sqlite3.PARSE_DECLTYPES |
 							 sqlite3.PARSE_COLNAMES)
 	cur = conn.cursor()
@@ -22,6 +31,14 @@ categoryDic = {val:key for key,val in categoryList}
 
 @app.route('/viewProducts/<category>')
 def viewProducts(category):
+	"""
+	[This function is used to render data to viewproducts page based on category]
+
+	:param category: [string]
+	:type : [string]
+	:return: [final data of products]
+	:rtype: [list]
+	"""
 	typeDic = {'any':" 1 ","fixed":" selling_option=1 ","bid":" selling_option=2 ","free":" selling_option=3 "}
 	sortDic = {"date":" order by created_at DESC","priceHL":"order by price DESC ","priceLH":"order by price "}
 	price = request.args.get('price') or 5000
@@ -68,6 +85,8 @@ def viewProducts(category):
 		temp.append(str(timeRemaining))
 		finalData.append(tuple(temp))
 	print(finalData)
+	print("type kya hai iska")
+	print(type(finalData))
 
 	return render_template('viewProducts.html',products=finalData)
 
@@ -75,6 +94,14 @@ def viewProducts(category):
 # reuse the viewProducts.html to display the search results by adding search.html
 @app.route("/search", methods=['GET', 'POST'])
 def search():
+	"""
+	[Make the search bar input name as "query" in frontend.
+	Reuse the viewProducts.html to display the search results by adding search.html
+	]
+
+	:return: [It renders search.html with list of products]
+	
+	"""
 	typeDic = {'any':" 1 ","fixed":" selling_option=1 ","bid":" selling_option=2 ","free":" selling_option=3 "}
 	sortDic = {"date":" order by created_at DESC","priceHL":"order by price DESC ","priceLH":"order by price "}
 	price = request.args.get('price') or 5000

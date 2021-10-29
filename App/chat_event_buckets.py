@@ -4,11 +4,21 @@ from time import localtime, strftime
 from App.chatDBOperations import save_message, get_room_by_roomname, get_messages
 
 
-# event buckets for chat application
-
-# relaying message from a client to all other connected clients of the room
 @socketio.on('message')
 def message(data):
+    """
+    This function is to handle message event on the server side, it sends a incoming message from a single client to all
+    all the connected clients of the chat room. It also saves the message in persistent storage so that if any user, who
+    is not online can view it later.
+
+    Inputs:
+        :data: Its a python dictionary consisting of message, room name to which this was sent and the user who sent it
+        :type data: JSON (can be accessed in python using Dictionary syntax)
+
+    Returns:
+        ::JSON format data which is to be sent to all connected clients of the room.(appending the timestamp from server
+        side)
+    """
     if data['room'] is None:
         send({'msg': "Select a chat room to start chatting with a product owner"})
         send({'msg': "If you are not a part of any chat room till now: "})
@@ -30,9 +40,18 @@ def message(data):
     pass
 
 
-# handling join room functionality
 @socketio.on('join')
 def join(data):
+    """
+    This function handles the join room functionality
+
+    Inputs:
+        :data: A json format data sent by client consisting of user-name and the room-name which the user wants to join
+        :type data: JSON (can be accessed in python using Dictionary syntax)
+
+    Returns:
+        ::A join room announcement to all connected clients of the chat room specified. (Type JSON)
+    """
     join_room(data['room'])
 
     # fetching room details using room name
@@ -54,6 +73,17 @@ def join(data):
 
 @socketio.on('leave')
 def leave(data):
+    """
+        This function handles the leave room functionality
+
+        Inputs:
+            :data: A json format data sent by client consisting of user-name and the room-name which the user wants to
+            leave
+            :type data: JSON (can be accessed in python using Dictionary syntax)
+
+        Returns:
+            ::A leave room announcement to all connected clients of the chat room specified. (Type JSON)
+        """
     if data['room']:
         leave_room(data['room'])
 
