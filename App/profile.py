@@ -14,40 +14,19 @@ cur = conn.cursor()
 with open('SqlFile.sql') as f:
     conn.executescript(f.read())
 
-# userId = session.get('userId')
 
 
 
-# cur.execute("""INSERT INTO user VALUES("1","Deeksha","Kasture","abc@iitb.ac.in",9876543210,2,213050072,1,NULL,NULL,NULL) """)
-# cur.execute("""SELECT  first_name,last_name,sex.name,email,contact_no FROM user,sex  WHERE user_id='1' and user.sex_id = sex.id """)
-
-
-# record = cur.fetchall()
-# for data in record:
-#     print(data)
-# print(record)
-# fname = record[0][0]
-# print(type(record))
-# lname = record[0][1]
-# name = fname+" "+lname
-# sex = record[0][2]
-# email = record[0][3]
-# contact = record[0][4]
-
-# name = "tempname"
-# sex = "female"
-# email = "abc@fmailo.com"
-# contact = "9876543210"
 
 
 class updateEmailForm(FlaskForm):
     """
-    [This function ]
+    [This function is used to update email ]
 
     :param FlaskForm: [description]
     :type FlaskForm: [type]
     """
-    # email = StringField('Email ID ', [validators.Email(message="invalid email")])
+     
     email = EmailField("Email ",  [InputRequired("Please enter your email address.")])
 
     submit = SubmitField('Submit')
@@ -56,21 +35,19 @@ class updateEmailForm(FlaskForm):
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     """
-    [This function is used to extract user data for profile page.If no user is logged in it will redirect to login page/home page]
+    [This function is used to extract user data for profile page.If no user is logged in it will redirect to login page/home page.]
 
-    :param FlaskForm: [description]
-    :type FlaskForm: [type]
+    
+    
     """
     userid = session.get('userId')
     if(userid == None):
         return redirect('/')
     print(session)
-    # fname = session.get('first_name')
-    # lname = session.get('last_name')
-    # print("last name is ",lname)
+    #getting data stored in session
     finalData = session.get('finalData')
     fname = finalData['first_name']
-    # print("hey my name is ",fname)
+    
     lname = finalData['last_name']
     name = fname + " " + lname
     email = finalData['email']

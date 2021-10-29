@@ -31,6 +31,13 @@ def fetchEnumTable(tableName,columns ):
 	return data
 
 def insertData(q):
+	"""
+	[function to insert data into database]
+
+	:param q: [query]
+	:type q: [string]
+	
+	"""
 	conn = sqlite3.connect('buzzDatabase.db')
 	cur = conn.cursor()
 
@@ -38,6 +45,12 @@ def insertData(q):
 	return conn.commit()
 
 class productForm(FlaskForm):
+	"""
+	[This function is used to take information of product that user wants to sell by posting ad through flaskform]
+
+	:param FlaskForm: [Form which takes product information as input]
+	
+	"""
 	types = fetchEnumTable("selling_opt","id,name")
 	choices = fetchEnumTable("categories","id,name")
 	photo = MultipleFileField(validators=[FileAllowed(photos, 'Image only!'),DataRequired()])
@@ -55,6 +68,11 @@ class productForm(FlaskForm):
 
 @app.route('/addProduct', methods=['GET', 'POST'])
 def addProducts():
+	"""
+	[This function is used to render the product details taken from flaskform to webpage myads.
+	If no user is logged in it will redirect user to home page.
+	Also this function fetches tags ,categories from database so that user can select one of them.]
+	"""
 	# names = get_names(ACTORS)
 	# you must tell the variable 'form' what you named the class, above
 	# 'form' is the variable name used in this template: index.html

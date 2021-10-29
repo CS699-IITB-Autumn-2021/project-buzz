@@ -4,13 +4,27 @@ from flask import session
 from App import config
 
 
-# generating a random six digit number for OTP
 def generateOTP():
+    """
+    This function generates a 6 digit random number
+
+    Returns:
+        ::6 digit random number
+    """
     return random.randrange(100000, 999999)
 
 
-# sending OTP message to the client
 def getOTPApi(number):
+    """
+    This function sends the OTP to the clients by accessing TWILIO messaging service
+
+    Inputs:
+        :number: Phone number entered by the user
+        :type number: String
+
+    Returns:
+        ::A boolean variable specifying status of message sent by backend, TRUE if sent successfully else FALSE
+    """
     account_sid = config["TWILIO_ACCOUNT_SID"]
     auth_token = config["TWILIO_AUTH_TOKEN"]
     client = Client(account_sid, auth_token)
