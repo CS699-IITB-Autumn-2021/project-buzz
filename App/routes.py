@@ -164,10 +164,20 @@ def ssoVerification():
 
 @app.route('/getOTP', methods=['POST', 'GET'])
 def getOTP():
+    """
+    This route handles Phone number verification part, It fetches the phone number entered by user, validates the number
+    .In case of validation errors it flashes appropriate error messages. If the number is found in correct format, then
+    sends OTP to the user
+
+    Return:
+        :: redirects the flow to validate OTP page if no validation errors, In case of validation error, flash error
+        messages and allows user to enter valid numbers.
+    """
     # fetching the phone number and validating it
     form = PhoneNumberForm()
     if form.validate_on_submit():
         number = form.contact_no.data
+        print(type(number))
         session['number'] = number
         val = getOTPApi(number)
         if val:
@@ -180,6 +190,15 @@ def getOTP():
 
 @app.route('/validateOTP', methods=['POST', 'GET'])
 def validateOTP():
+    """
+    This route handles OTP validation part, It fetches the OTP entered by user, validates the OTP..In case of validation
+    errors it flashes appropriate error messages. If the OTP is found to be correct, then redirects the user to landing
+    page
+
+    Returns:
+        :: redirects the flow to landing page if no validation errors, In case of validation error, flash error
+        messages and allows user to enter correct OTP.
+    """
     otp = request.form['otp']
     finalData = session.get('finalData')
     valid = True
@@ -215,6 +234,12 @@ def validateOTP():
 
 @app.route("/chat", methods=['GET', 'POST'])
 def chat():
+    """
+    This route is to redirect the user to chat page where the users can view the chat rooms which they are part of.
+
+    Returns:
+        :: redirects the user to that chat page.
+    """
     userid = session.get('userId')
     if (userid == None):
         return redirect('/')
@@ -227,11 +252,19 @@ def chat():
     return render_template('chat.html', username=username, rooms=ROOMS)
 
 
-# dummy route to pass in the product owner name to the create room stuff
-# this in final must accept only POST request from the View-single-commodity-page(Wireframe reference) and must pass in
-# product owner name
 @app.route("/create-room", methods=['GET', 'POST'])
 def create_room():
+    """
+    This route is create a chat room for users. If the user if first time chatting with some owner then new chat room
+    is created. If chat room already exists for the user and owner only redirection is to be done, no room creation.
+
+    Inputs:
+        :owner_name: The owner name is fetched from the client side when 'chat with owner' button is clicked from
+        'details' page.
+
+    Returns:
+        :: redirects the user to that chat page.
+    """
     if request.method == 'POST':
         owner_name = request.form.get("owner")
         print(owner_name)
@@ -247,9 +280,17 @@ def create_room():
     return render_template("create-room.html")
 
 
-
 @app.route('/updatePhoneNumber', methods=['POST', 'GET'])
 def updatePhoneNumber():
+    """
+    This route handles updating Phone number functionality, It fetches the phone number entered by user, validates the
+    number .In case of validation errors it flashes appropriate error messages. If the number is found in correct format
+    , then sends OTP to the user
+
+    Return:
+        :: redirects the flow to validateOTPForUpdate if no validation errors, In case of validation error, flash error
+        messages and allows user to enter valid numbers.
+    """
     userid = session.get('userId')
     if (userid == None):
         return redirect('/')
@@ -273,6 +314,15 @@ def updatePhoneNumber():
 
 @app.route('/validateOTPForUpdate', methods=['POST', 'GET'])
 def validateOTPForUpdate():
+    """
+       This route handles OTP validation part on update phone number, It fetches the OTP entered by user, validates the
+       OTP..In case of validation errors it flashes appropriate error messages. If the OTP is found to be correct, then
+       redirects the user to profile page
+
+       Returns:
+           :: redirects the flow to profile page if no validation errors, In case of validation error, flash error
+           messages and allows user to enter correct OTP.
+       """
     userid = session.get('userId')
     if (userid == None):
         return redirect('/')
@@ -290,24 +340,3 @@ def validateOTPForUpdate():
             return render_template('UpdatePhoneOTP.html')
 
 
-@app.route("/dummylogin3", methods=['GET', 'POST'])
-def dummyLogin3():
-    query = """INSERT INTO user(user_id, first_name, last_name, email, contact_no, roll_no, valid) VALUES(?,?,?,?,?,?,?) """
-    data = ['test-rollnumber3', 'Test', 'User', 'test3@gmail.com', 919876543217, 12348, True]
-    cur.execute(query, data)
-    conn.commit()
-    cur.execute("""SELECT * FROM user WHERE user_id='test-rollnumber3' """)
-    records = cur.fetchall()
-    print(records[0])
-    finalData = {}
-    finalData['user_id'] = records[0][0]
-    finalData['first_name'] = records[0][1]
-    finalData['last_name'] = records[0][2]
-    finalData['email'] = records[0][3]
-    finalData['contact_no'] = records[0][4]
-    finalData['sex_id'] = records[0][5]
-    finalData['roll_no'] = records[0][6]
-    session['finalData'] = finalData
-    for rows in records:
-        print(rows)
-    return redirect(url_for('chat'))
